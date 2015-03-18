@@ -1,0 +1,1 @@
+Usage: node zen.etl.js mysql://<user>@<host>/<mydb>
