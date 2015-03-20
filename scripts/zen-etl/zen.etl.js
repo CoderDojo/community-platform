@@ -93,7 +93,7 @@ async.parallel(userQueries, function(err, results) {
   tUsersProfiles(results);
   tUserDojos(results);
 
-  fs.writeFileSync('./data/users.json', JSON.stringify(results));
+  fs.writeFileSync('./data/users.json', JSON.stringify(results.users));
   console.log("Users.json finished");
 });
 
