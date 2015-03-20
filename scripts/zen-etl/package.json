@@ -10,6 +10,10 @@
   "dependencies": {
     "async": "~0.9.0",
     "mysql": "~2.5.5",
-    "lodash": "~3.5.0"
+    "config": "~1.12.0",
+    "lodash": "~3.5.0",
+    "seneca": "~0.6.1",
+    "seneca-mongo-store": "~0.2.0",
+    "js-yaml": "~3.2.7"
   }
 }
