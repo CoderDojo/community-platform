@@ -94,7 +94,7 @@ async.parallel(userQueries, function(err, results) {
   tUserDojos(results);
 
   fs.writeFileSync('./data/users.json', JSON.stringify(results.users));
-  console.log("Users.json finished");
+  console.log("./data/users.json finished");
 });
 
 
@@ -129,9 +129,9 @@ function execSessionQuery(cb){
   execIndividualQueries(sessionsStatement)(cb);
 }
 
-execLoginQuery(writeFile("login.json"));
-execLoginAttemptsQuery(writeFile("loginAttempts.json"));
-execSessionQuery(writeFile("sessions.json"))
-execDojoQuery(writeFile("dojos.json"));
+execLoginQuery(writeFile("./data/login.json"));
+execLoginAttemptsQuery(writeFile("./data/loginAttempts.json"));
+execSessionQuery(writeFile("./data/sessions.json"))
+execDojoQuery(writeFile("./data/dojos.json"));
 
 connection.end();
