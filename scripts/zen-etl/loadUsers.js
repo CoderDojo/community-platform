@@ -4,42 +4,75 @@ var fs = require('fs');
 var seneca = require('seneca')();
 var async = require('async');
 
-var dojos = JSON.parse(fs.readFileSync('./data/users.json', 'utf8'));
+var users = JSON.parse(fs.readFileSync('./data/users-test.json', 'utf8'));
 var plugin = "load-users";
 var config = require('config');
-var ENTITY_NS = "cd/users";
+var ENTITY_NS = "cd/users-test";
 
 seneca.use('mongo-store', config.db)
+seneca.use('user');
 
 seneca.ready(function() {
-  seneca.add({ role: plugin, cmd: 'insert' }, function (args, done) {
+  var userpin = seneca.pin({role:'user',cmd:'*'});
+  var userent = seneca.make('sys/user');
 
-    function createUser(user, cb){
-      seneca.make$(ENTITY_NS).save$(user, function(err, response) {
+  seneca.add({ role: plugin, cmd: 'register-users' }, function (args, done) {
+
+    function registerUser(user, cb){
+      console.log("registering %s", user.email);
+      user.name = user.username;
+      userpin.register(user, function(err, out){
         if(err){
           return cb(err);
+        } else {
+          return cb(null, out.ok);
         }
-
-        return cb(null, response);
       });
     }
 
-    var loadUsers = function (done) {
-      async.eachSeries(dojos, createUser , done);
-    };
+    function resetUser(user, cb){
+      console.log("resetting %s", user.email);
+      userpin.create_reset({email: user.email}, function(err, out){
+        if(err){
+          return cb(err);
+        } else {
+          userpin.execute_reset({
+            token: out.reset.id,
+            password: "a",
+            repeat: "a"
+          }, function(err, out){
+            if(err){
+              return cb(err);
+            } else {
+              return cb(null, out.ok);
+            }
+          })
+        }
 
-    async.series([
-      loadUsers
-    ], done);
+      })
+    }
 
+    function registerUsers(done){
+      async.eachSeries(users, registerUser, done);
+    }
+
+    function resetUsers(done){
+      
+      userent.list$(function(err, users){
+        async.eachSeries(users, resetUser, done);
+      })
+    }
+
+    async.series([registerUsers, resetUsers], done);
   });
 
-  seneca.act({ role: plugin, cmd: 'insert', timeout: false }, function(err){
-    if(err){
-      throw err;
-    } else{
-      console.log("complete");
-    }   
-  });
-  
+
+  seneca.act({ role: plugin, cmd: 'register-users', timeout: false},
+    function(err){
+      if(err){
+        throw err;
+      } else{
+        console.log("complete");
+      }   
+    });
 });
