@@ -7,9 +7,8 @@ var async = require('async');
 var users = JSON.parse(fs.readFileSync('./data/users-test.json', 'utf8'));
 var plugin = "load-users";
 var config = require('config');
-var ENTITY_NS = "cd/users-test";
 
-seneca.use('mongo-store', config.db)
+seneca.use('mongo-store', config.db);
 seneca.use('user');
 
 seneca.ready(function() {
@@ -38,8 +37,8 @@ seneca.ready(function() {
         } else {
           userpin.execute_reset({
             token: out.reset.id,
-            password: "a",
-            repeat: "a"
+            password: "test",
+            repeat: "test"
           }, function(err, out){
             if(err){
               return cb(err);
