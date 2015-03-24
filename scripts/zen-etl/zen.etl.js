@@ -14,7 +14,12 @@ var userQueries = {};
 
 
 //SQL statemennts
-userStatements.users = "SELECT * FROM zen_live.users;";
+userStatements.users =  "select `zen_live`.`users`.`id`, `zen_live`.`users`.`username`," + 
+                        "`zen_live`.`users`.`email`, `zen_live`.`users`.`level`,`zen_live`.`users`.`activated`," +
+                        "`zen_live`.`users`.`banned` ,`zen_live`.`users`.`last_ip`," + 
+                        "`zen_live`.`users`.`last_login` ,`zen_live`.`users`.`created`," +
+                        "`zen_live`.`users`.`modified` from `zen_live`.`users`;";
+                        
 userStatements.agreements = "SELECT * FROM zen_live.charter_agreement;";
 userStatements.profiles = "SELECT * FROM `zen_live`.`user_profiles`;"
 userStatements.usersDojos = "SELECT * FROM zen_live.user_dojos;"
