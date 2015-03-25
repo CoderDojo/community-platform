@@ -4,8 +4,8 @@ var fs = require('fs');
 var seneca = require('seneca')();
 var async = require('async');
 
-var users = JSON.parse(fs.readFileSync('./data/users-test.json', 'utf8'));
-var plugin = "load-users";
+var users = JSON.parse(fs.readFileSync('./data/users.json', 'utf8'));
+var plugin = 'load-users';
 var config = require('config');
 
 seneca.use('mongo-store', config.db);
@@ -18,32 +18,44 @@ seneca.ready(function() {
   seneca.add({ role: plugin, cmd: 'register-users' }, function (args, done) {
 
     function registerUser(user, cb){
-      console.log("registering %s", user.email);
+      //console.log('registering %s', user.email);
       user.name = user.username;
       userpin.register(user, function(err, out){
         if(err){
           return cb(err);
-        } else {
-          return cb(null, out.ok);
+        }
+        else {
+          if (!out.ok) {
+            console.warn('register user', user.id, 'failed:', out.why);
+          }
+          return cb();
         }
       });
     }
 
     function resetUser(user, cb){
-      console.log("resetting %s", user.email);
+      //console.log('resetting %s', user.email);
       userpin.create_reset({email: user.email}, function(err, out){
         if(err){
           return cb(err);
         } else {
+          if (!out.ok) {
+            console.warn('create reset for user', user.id, 'failed:', out.why);
+            return cb();
+          }
           userpin.execute_reset({
             token: out.reset.id,
-            password: "test",
-            repeat: "test"
+            password: 'test',
+            repeat: 'test'
           }, function(err, out){
             if(err){
               return cb(err);
-            } else {
-              return cb(null, out.ok);
+            }
+            else {
+              if (!out.ok) {
+                console.warn('execute reset for user', user.id, 'failed:', out.why);
+              }
+              return cb();
             }
           })
         }
@@ -52,7 +64,7 @@ seneca.ready(function() {
     }
 
     function registerUsers(done){
-      async.eachSeries(users, registerUser, done);
+      async.eachLimit(users, 1, registerUser, done);
     }
 
     function resetUsers(done){
@@ -69,9 +81,10 @@ seneca.ready(function() {
   seneca.act({ role: plugin, cmd: 'register-users', timeout: false},
     function(err){
       if(err){
-        throw err;
+        console.error(err);
       } else{
-        console.log("complete");
-      }   
+        console.log('complete');
+      }
+      seneca.close();
     });
 });
