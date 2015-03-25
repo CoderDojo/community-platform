@@ -2,11 +2,12 @@
 
 var fs = require('fs');
 var seneca = require('seneca')({
-  timeout: 5 * 1000
+  timeout: 10 * 60 * 1000
 });
 var async = require('async');
 
 var users = JSON.parse(fs.readFileSync('./data/users.json', 'utf8'));
+
 var plugin = 'load-users';
 var config = require('config');
 
@@ -28,7 +29,7 @@ seneca.ready(function() {
         }
         else {
           if (!out.ok) {
-            console.warn('register user', user.id, 'failed:', out.why);
+            console.warn('register user', user.id, user.email, 'failed:', out.why);
           }
           return cb();
         }
@@ -42,7 +43,7 @@ seneca.ready(function() {
           return cb(err);
         } else {
           if (!out.ok) {
-            console.warn('create reset for user', user.id, 'failed:', out.why);
+            console.warn('create reset for user', user.id, user.email, 'failed:', out.why);
             return cb();
           }
           userpin.execute_reset({
@@ -55,7 +56,7 @@ seneca.ready(function() {
             }
             else {
               if (!out.ok) {
-                console.warn('execute reset for user', user.id, 'failed:', out.why);
+                console.warn('execute reset for user', user.id, user.email, 'failed:', out.why);
               }
               return cb();
             }
@@ -66,13 +67,15 @@ seneca.ready(function() {
     }
 
     function registerUsers(done){
-      async.eachLimit(users, 1, registerUser, done);
+      console.log('registering', users.length, 'users...');
+      async.eachLimit(users, 5, registerUser, done);
     }
 
     function resetUsers(done){
       
       userent.list$(function(err, users){
-        async.eachSeries(users, resetUser, done);
+        console.log('have', users.length, 'imported users. resetting passwords...');
+        async.eachLimit(users, 5, resetUser, done);
       })
     }
 
