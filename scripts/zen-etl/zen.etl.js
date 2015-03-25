@@ -4,7 +4,7 @@ var async = require('async');
 var fs = require('fs');
 
 var userStatements = {}, dojoStatement, loginStatement, 
-    loginAttemptsStatement, sessionsStatement;
+    loginAttemptsStatement, sessionsStatement, countriesStatement;
 
 var connString = process.argv[2] ? process.argv[2] : "mysql://root@127.0.0.1/zen_live"
 
@@ -24,8 +24,11 @@ userStatements.agreements = "SELECT * FROM zen_live.charter_agreement;";
 userStatements.profiles = "SELECT * FROM `zen_live`.`user_profiles`;"
 userStatements.usersDojos = "SELECT * FROM zen_live.user_dojos;"
 
+countriesStatement = "SELECT * FROM zen_live.countries";
+
 dojoStatement = "SELECT * FROM zen_live.dojos join `zen_live`.`countries` on((`zen_live`.`dojos`.`country` = `zen_live`.`countries`.`alpha2`));";
 loginStatement = "SELECT * FROM zen_live.user_autologin;";
+
 loginAttemptsStatement = "SELECT * FROM zen_live.login_attempts;";
 sessionsStatement = "SELECT * FROM zen_live.ci_sessions;";
 
@@ -134,9 +137,14 @@ function execSessionQuery(cb){
   execIndividualQueries(sessionsStatement)(cb);
 }
 
+function execCountriesQuery(cb){
+  execIndividualQueries(countriesStatement)(cb);
+}
+
 execLoginQuery(writeFile("./data/login.json"));
 execLoginAttemptsQuery(writeFile("./data/loginAttempts.json"));
 execSessionQuery(writeFile("./data/sessions.json"))
 execDojoQuery(writeFile("./data/dojos.json"));
+execCountriesQuery(writeFile("./data/countries.json"));
 
 connection.end();
