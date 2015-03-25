@@ -1,7 +1,9 @@
 'use strict'
 
 var fs = require('fs');
-var seneca = require('seneca')();
+var seneca = require('seneca')({
+  timeout: 5 * 1000
+});
 var async = require('async');
 
 var users = JSON.parse(fs.readFileSync('./data/users.json', 'utf8'));
