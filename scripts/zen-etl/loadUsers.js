@@ -22,6 +22,10 @@ seneca.ready(function() {
 
     function registerUser(user, cb){
       //console.log('registering %s', user.email);
+      if (!user.username || !user.email) {
+        console.warn('skipping', user.id, ', missing username or email');
+        return cb();
+      }
       user.name = user.username;
       userpin.register(user, function(err, out){
         if(err){
