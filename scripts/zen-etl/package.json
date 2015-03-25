@@ -14,6 +14,7 @@
     "lodash": "~3.5.0",
     "seneca": "~0.6.1",
     "seneca-mongo-store": "~0.2.0",
+    "seneca-user": "git://github.com/rjrodger/seneca-user.git",
     "js-yaml": "~3.2.7"
   }
 }
