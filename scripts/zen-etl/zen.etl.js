@@ -16,7 +16,7 @@ var userQueries = {};
 //SQL statemennts
 userStatements.users =  "select `zen_live`.`users`.`id`, `zen_live`.`users`.`username`," + 
                         "`zen_live`.`users`.`email`, `zen_live`.`users`.`level`,`zen_live`.`users`.`activated`," +
-                        "`zen_live`.`users`.`banned` ,`zen_live`.`users`.`last_ip`," + 
+                        "`zen_live`.`users`.`banned` ,`zen_live`.`users`.`ban_reason`,`zen_live`.`users`.`last_ip`," + 
                         "`zen_live`.`users`.`last_login` ,`zen_live`.`users`.`created`," +
                         "`zen_live`.`users`.`modified` from `zen_live`.`users`;";
                         
