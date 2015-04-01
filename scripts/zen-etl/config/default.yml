@@ -1,4 +1,6 @@
-db:
-  name: 'zen_live'
-  host: '127.0.0.1'
-  port: 27018
+postgresql:
+  name:'zen_live'
+  host:'192.168.0.203'
+  port:5432
+  username:'postgres'
+  password:'test'
