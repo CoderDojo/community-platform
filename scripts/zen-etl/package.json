@@ -17,6 +17,8 @@
     "seneca-user": "git://github.com/rjrodger/seneca-user.git",
     "js-yaml": "~3.2.7",
     "seneca-postgresql-store": "~0.6.0",
-    "node-uuid": "~1.4.3"
+    "node-uuid": "~1.4.3",
+    "underscore": "~1.8.2",
+    "pg": "~4.3.0"
   }
 }

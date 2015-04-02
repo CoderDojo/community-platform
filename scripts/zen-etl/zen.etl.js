@@ -72,6 +72,7 @@ async.parallel(queries, function(err, results) {
     if(user){
       agreement.user_id = user.uuid;
     } else {
+      agreement.user_id = "";
       console.log("[agreements] No user found for: ", agreement);
     }
 
@@ -86,6 +87,7 @@ async.parallel(queries, function(err, results) {
     if(user){
       profile.user_id = user.uuid;  
     } else {
+      profile.user_id = "";
       console.log("[profiles] No user found for: ",profile);
     }
 
@@ -97,8 +99,17 @@ async.parallel(queries, function(err, results) {
 
   var newDojos = _.map(results.dojos, function(dojo){
     if(dojo.created == "0000-00-00 00:00:00"){
-      delete dojo.created;
+      dojo.created = "-infinity";
     }
+
+    if(!dojo.deleted_at){
+      dojo.deleted_at = "-infinity";
+    }
+
+    if(!dojo.verified_at){
+      dojo.verified_at = "-infinity";
+    }
+
 
     dojo.id = dojo.uuid;
     delete dojo.uuid;
@@ -113,12 +124,14 @@ async.parallel(queries, function(err, results) {
     if(user){
       userDojo.user_id = user.uuid;
     } else{
+      userDojo.user_id = "";
       console.log("[usersDojos] No user found for: ", userDojo);
     }
 
     if(dojo){
       userDojo.dojo_id = dojo.uuid;
     } else {
+      userDojo.dojo_id = "";
       console.log("[usersDojos] No dojo found for: ", userDojo);
     }
   });
