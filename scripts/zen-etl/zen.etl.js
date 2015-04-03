@@ -22,7 +22,7 @@ statements.agreements = "SELECT UUID() as uuid, user_id AS mysql_user_id, full_n
 
 statements.profiles = "SELECT UUID() as uuid , user_id AS mysql_user_id, role, dojo FROM `zen_live`.`user_profiles`;"
 
-statements.usersDojos = "SELECT user_id AS mysql_user_id, dojo_id AS mysql_dojo_id, owner FROM zen_live.user_dojos;"
+statements.usersDojos = "SELECT UUID() as id, user_id AS mysql_user_id, dojo_id AS mysql_dojo_id, owner FROM zen_live.user_dojos;"
 
 statements.countries = "SELECT UUID() as id, continent, alpha2, alpha3, number, country_name FROM zen_live.countries";
 
@@ -91,6 +91,10 @@ async.parallel(queries, function(err, results) {
       console.log("[profiles] No user found for: ",profile);
     }
 
+    if(!profile.mysql_dojo_id){
+      profile.mysql_dojo_id = "";
+    }
+
     profile.id = profile.uuid;
     delete profile.uuid;
 
@@ -117,6 +121,20 @@ async.parallel(queries, function(err, results) {
     return dojo; 
   });
 
+  var newUsers = _.map(results.users, function(user){
+    if(user.created == "0000-00-00 00:00:00"){
+      user.created = "-infinity";
+    }
+
+    if(user.modified == "0000-00-00 00:00:00"){
+      user.modified = "-infinity";
+    }
+
+    return user;
+  });
+
+  //console.log(results.usersDojos);
+
   var newUserDojos = _.map(results.usersDojos, function(userDojo){
     var user = _.findWhere(results.users, {mysql_user_id: userDojo.mysql_user_id});
     var dojo = _.findWhere(results.dojos, {mysql_dojo_id: userDojo.mysql_dojo_id});
@@ -129,11 +147,13 @@ async.parallel(queries, function(err, results) {
     }
 
     if(dojo){
-      userDojo.dojo_id = dojo.uuid;
+      userDojo.dojo_id = dojo.id;
     } else {
       userDojo.dojo_id = "";
       console.log("[usersDojos] No dojo found for: ", userDojo);
     }
+
+    return userDojo;
   });
 
   fs.writeFileSync("./data/countries.json", JSON.stringify(results.countries));
@@ -146,7 +166,7 @@ async.parallel(queries, function(err, results) {
 
   fs.writeFileSync("./data/agreements.json", JSON.stringify(newAgreements));
 
-  fs.writeFileSync("./data/users.json", JSON.stringify(results.users));
+  fs.writeFileSync("./data/users.json", JSON.stringify(newUsers));
 
   console.log("complete");
 });

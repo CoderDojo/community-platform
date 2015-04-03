@@ -33,7 +33,6 @@ seneca.ready(function() {
                     " VALUES (" + "'" + country.id + "'" + ", '" + country.continent + "', '"+  country.alpha2 +  "', '" 
                       + country.alpha3 + "', '" +  country.number + "', '" + pgEscapeString(country.country_name) +  "')";
 
-        console.log(query);
         client.query(query, function(err, result) {
           if(err) {
             console.error('error running query', err);
