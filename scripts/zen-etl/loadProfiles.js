@@ -9,7 +9,7 @@ var plugin = "load-profiles";
 var config = require('config');
 
 var pg = require('pg');
-var conString = "postgres://postgres:test@127.0.0.1/zen_live";
+var conString = config.postgresql.connstring;
 
 seneca.ready(function(){
   seneca.add({role: plugin, cmd: 'insert'}, function(args, done){
@@ -53,9 +53,11 @@ seneca.ready(function(){
 
   seneca.act({ role: plugin, cmd: 'insert', timeout: false }, function(err){
     if(err){
-      throw err;
+      console.log(err);
+      process.exit(1);
     } else{
-      console.log("complete");
-    }   
+      console.log("profiles complete");
+      process.exit(0);
+    }    
   });
 });

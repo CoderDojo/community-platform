@@ -9,8 +9,7 @@ var plugin = "load-agreements";
 var config = require('config');
 var pg = require('pg');
 
-var conString = "postgres://postgres:test@127.0.0.1/zen_live";
-
+var conString = config.postgresql.connstring;
 
 function pgEscapeString(str){
   return str.split("'").join("''");
@@ -30,8 +29,6 @@ seneca.ready(function(){
                     " VALUES(" + agreement.mysql_user_id + ",'" + pgEscapeString(agreement.full_name) + "', '" +  agreement.ip_address + "', '" +
                     agreement.timestamp + "', '" + agreement.agreement_version + "', '"  +  agreement.user_id + "', '" +
                     agreement.id + "')";
-
-        console.log(query);
 
         client.query(query, function(err, result){
           if(err){
@@ -60,9 +57,11 @@ seneca.ready(function(){
 
   seneca.act({ role: plugin, cmd: 'insert', timeout: false }, function(err){
     if(err){
-      throw err;
+      console.log(err);
+      process.exit(1);
     } else{
-      console.log("complete");
+      console.log("agreements complete");
+      process.exit(0)
     }   
   });
 
