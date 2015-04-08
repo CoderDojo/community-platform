@@ -26,11 +26,16 @@ statements.usersDojos = "SELECT UUID() as id, user_id AS mysql_user_id, dojo_id 
 
 statements.countries = "SELECT UUID() as id, continent, alpha2, alpha3, number, country_name FROM zen_live.countries";
 
-statements.dojos = "SELECT UUID() as uuid, id as mysql_dojo_id, name, creator, created, verified_at," + 
-                " verified_by, verified, need_mentors, stage, time, country," + 
-                " location, coordinates, notes, email, website, twitter," + 
-                " google_group, eb_id, supporter_image, deleted, " + 
-                "deleted_by, deleted_at, private, url_slug FROM zen_live.dojos";
+statements.dojos = "SELECT UUID() as uuid, dojos.id as mysql_dojo_id, dojos.name, dojos.creator, dojos.created, dojos.verified_at," + 
+                " dojos.verified_by, dojos.verified, dojos.need_mentors, dojos.stage, dojos.time, dojos.country," + 
+                " dojos.location, dojos.coordinates, dojos.notes, dojos.email, dojos.website, dojos.twitter," + 
+                " dojos.google_group, dojos.eb_id, dojos.supporter_image, dojos.deleted, " + 
+                " dojos.deleted_by, dojos.deleted_at, dojos.private, dojos.url_slug, " + 
+                " countries.continent, countries.alpha2, countries.alpha3, countries.number as country_number, countries.country_name" +
+                " FROM dojos, countries WHERE countries.alpha2 = dojos.country;";
+
+console.log(statements.dojos);
+
 
 statements.logins = "SELECT * FROM zen_live.user_autologin;";
 
