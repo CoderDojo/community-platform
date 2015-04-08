@@ -1,6 +1,2 @@
 postgresql:
-  name: 'zen_live'
-  host: '192.168.0.203'
-  port: 5432
-  username: 'postgres'
-  password: 'test'
+  connstring: "postgres://postgres:test@127.0.0.1/cd-zen-platform-development"
