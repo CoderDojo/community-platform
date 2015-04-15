@@ -1,2 +1,8 @@
 postgresql:
-  connstring: "postgres://postgres:test@127.0.0.1/cd-zen-platform-development"
+  connstring: "postgres://postgres:test@192.168.0.203/cd-zen-platform-development"
+postgresql-store:
+  name: 'cd-zen-platform-development'
+  host: '127.0.0.1'
+  port: 5432
+  username: 'postgres'
+  password: 'test'
