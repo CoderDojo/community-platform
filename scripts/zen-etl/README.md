@@ -1,3 +1,16 @@
+Install dependencies
+
+```
+npm install
+```
+
+Configuration
+
+edit MySQL connection string in zen.etl.js
+
+edit default.yml
+
+
 Usage:
 
 1) Extract and generate output files by running:
@@ -11,3 +24,4 @@ Usage:
     or run individual load* scripts:
 
     node <load_script_name>
+
