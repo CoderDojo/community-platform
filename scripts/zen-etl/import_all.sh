@@ -4,3 +4,4 @@ node loadDojos.js
 node loadProfiles.js
 node loadUsers.js
 node loadUsersDojos.js
+node loadGeonames.js
