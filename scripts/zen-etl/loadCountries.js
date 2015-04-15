@@ -9,37 +9,70 @@ var plugin = "load-countries";
 var config = require('config');
 var ENTITY_NS = "cd/countries";
 
-seneca.use('mongo-store', config.db)
+var pg = require('pg');
+var conString = config.postgresql.connstring;
 
+
+function pgEscapeString(str){
+  return str.split("'").join("''");
+}
 seneca.ready(function() {
   seneca.add({ role: plugin, cmd: 'insert' }, function (args, done) {
 
-    function createCountries(country, cb){
-      seneca.make$(ENTITY_NS).save$(country, function(err, response) {
+    var client = new pg.Client(conString);
+    client.connect(function(err) {
+      if(err) {
+        console.error('could not connect to postgres', err);
+        return done(err)
+      }
+
+
+      
+      function createCountries(country, cb){
+        var query = "INSERT INTO cd_countries(id, continent, alpha2, alpha3, number, country_name)" + 
+                    " VALUES (" + "'" + country.id + "'" + ", '" + country.continent + "', '"+  country.alpha2 +  "', '" 
+                      + country.alpha3 + "', '" +  country.number + "', '" + pgEscapeString(country.country_name) +  "')";
+
+        client.query(query, function(err, result) {
+          if(err) {
+            console.error('error running query', err);
+            return cb(err);
+          }
+          
+          return cb();
+        });
+      }
+
+      var loadCountries = function (done) {
+        async.eachSeries(countries, createCountries , done);
+      };
+
+      async.series([
+        loadCountries
+      ], function(err){
         if(err){
-          return cb(err);
+          return done(err);
         }
 
-        return cb(null, response);
+        client.end();
+        done();
       });
-    }
 
-    var loadCountries = function (done) {
-      async.eachSeries(countries, createCountries , done);
-    };
-
-    async.series([
-      loadCountries
-    ], done);
-
+    });
   });
+    
+
 
   seneca.act({ role: plugin, cmd: 'insert', timeout: false }, function(err){
     if(err){
-      throw err;
+      console.log(err);
+      process.exit(1);
     } else{
-      console.log("complete");
+      console.log("countries complete");
+      process.exit(0);
     }   
   });
   
 });
+
+

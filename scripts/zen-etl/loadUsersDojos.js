@@ -4,11 +4,11 @@ var fs = require('fs');
 var seneca = require('seneca')();
 var async = require('async');
 
-var users = JSON.parse(fs.readFileSync('./data/users.json', 'utf8'));
-var plugin = "load-users";
+var usersDojos = JSON.parse(fs.readFileSync('./data/usersDojos.json', 'utf8'));
+var plugin = "load-usersdojos";
 
-var config =  require('config');
-var ENTITY_NS = "sys/user";
+var config = require('config');
+var ENTITY_NS = "cd/usersdojos";
 var pg = require('pg');
 var conString = config.postgresql.connstring;
 
@@ -22,14 +22,10 @@ seneca.ready(function(){
         return done(err);
       }
 
-
-      function createUser(user, cb){
-        user.activated = !!user.activated;
-        var query = "INSERT INTO sys_user (id, mysql_user_id, username, email, "  +
-                    "level, active, banned, ban_reason, \"when\", modified)" + 
-                    " VALUES('" + user.uuid + "'," + user.mysql_user_id + ",'" + user.username  + "', '" + 
-                    user.email + "'," + user.level +  "," + user.activated + ","  + user.banned + ",'" + 
-                    user.ban_reason + "', '" + user.created + "', '" + user.modified + "')";
+      function createUsersDojos(userDojo, cb){
+        var query = "INSERT INTO cd_usersdojos (mysql_user_id, mysql_dojo_id, owner, user_id, dojo_id, id)" + 
+        "VALUES (" + "'" + userDojo.mysql_user_id + "','" + userDojo.mysql_dojo_id + "', '" + userDojo.owner + 
+          "', '" + userDojo.user_id + "', '" + userDojo.dojo_id + "','" +  userDojo.id +  "')";
 
         client.query(query, function(err, result){
           if(err){
@@ -41,19 +37,21 @@ seneca.ready(function(){
         });
       }
 
-      var loadUsers = function(done){
-        async.eachSeries(users, createUser, done);
+      var loadUsersDojos = function(done){
+        async.eachSeries(usersDojos, createUsersDojos, done);
       }
 
-      async.series([loadUsers], function(err){
+      async.series([
+        loadUsersDojos
+      ], function(err){
         if(err){
           return done(err);
         }
-
         client.end();
         done();
       })
     });
+
   });
 
   seneca.act({ role: plugin, cmd: 'insert', timeout: false }, function(err){
@@ -61,8 +59,8 @@ seneca.ready(function(){
       console.log(err);
       process.exit(1);
     } else{
-      console.log("users complete");
+      console.log("users dojos complete");
       process.exit(0);
-    }    
+    }   
   });
 });

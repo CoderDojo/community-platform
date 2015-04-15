@@ -2,35 +2,46 @@ var mysql = require('mysql');
 var _ = require('lodash');
 var async = require('async');
 var fs = require('fs');
+var uuid = require('node-uuid');
 
-var userStatements = {}, dojoStatement, loginStatement, 
-    loginAttemptsStatement, sessionsStatement, countriesStatement;
+var statements = {}, queries = {};
 
 var connString = process.argv[2] ? process.argv[2] : "mysql://root@127.0.0.1/zen_live"
 
 console.log("DB: ", connString);
 
-var userQueries = {};
-
-
 //SQL statemennts
-userStatements.users =  "select `zen_live`.`users`.`id`, `zen_live`.`users`.`username`," + 
-                        "`zen_live`.`users`.`email`, `zen_live`.`users`.`level`,`zen_live`.`users`.`activated`," +
-                        "`zen_live`.`users`.`banned` ,`zen_live`.`users`.`last_ip`," + 
-                        "`zen_live`.`users`.`last_login` ,`zen_live`.`users`.`created`," +
-                        "`zen_live`.`users`.`modified` from `zen_live`.`users`;";
+statements.users =  "SELECT UUID() as uuid, id as mysql_user_id, username," + 
+                        "email, level,activated," +
+                        "banned ,ban_reason,last_ip," + 
+                        "last_login ,created," +
+                        "modified FROM zen_live.users";
                         
-userStatements.agreements = "SELECT * FROM zen_live.charter_agreement;";
-userStatements.profiles = "SELECT * FROM `zen_live`.`user_profiles`;"
-userStatements.usersDojos = "SELECT * FROM zen_live.user_dojos;"
+statements.agreements = "SELECT UUID() as uuid, user_id AS mysql_user_id, full_name, ip_address," + 
+                            " timestamp, agreement_version FROM zen_live.charter_agreement;";
 
-countriesStatement = "SELECT * FROM zen_live.countries";
+statements.profiles = "SELECT UUID() as uuid , user_id AS mysql_user_id, role, dojo FROM `zen_live`.`user_profiles`;"
 
-dojoStatement = "SELECT * FROM zen_live.dojos join `zen_live`.`countries` on((`zen_live`.`dojos`.`country` = `zen_live`.`countries`.`alpha2`));";
-loginStatement = "SELECT * FROM zen_live.user_autologin;";
+statements.usersDojos = "SELECT UUID() as id, user_id AS mysql_user_id, dojo_id AS mysql_dojo_id, owner FROM zen_live.user_dojos;"
 
-loginAttemptsStatement = "SELECT * FROM zen_live.login_attempts;";
-sessionsStatement = "SELECT * FROM zen_live.ci_sessions;";
+statements.countries = "SELECT UUID() as id, continent, alpha2, alpha3, number, country_name FROM zen_live.countries";
+
+statements.dojos = "SELECT UUID() as uuid, dojos.id as mysql_dojo_id, dojos.name, dojos.creator, dojos.created, dojos.verified_at," + 
+                " dojos.verified_by, dojos.verified, dojos.need_mentors, dojos.stage, dojos.time, dojos.country," + 
+                " dojos.location, dojos.coordinates, dojos.notes, dojos.email, dojos.website, dojos.twitter," + 
+                " dojos.google_group, dojos.eb_id, dojos.supporter_image, dojos.deleted, " + 
+                " dojos.deleted_by, dojos.deleted_at, dojos.private, dojos.url_slug, " + 
+                " countries.continent, countries.alpha2, countries.alpha3, countries.number as country_number, countries.country_name" +
+                " FROM dojos, countries WHERE countries.alpha2 = dojos.country;";
+
+console.log(statements.dojos);
+
+
+statements.logins = "SELECT * FROM zen_live.user_autologin;";
+
+statements.loginAttempts = "SELECT * FROM zen_live.login_attempts;";
+
+statements.sessions = "SELECT * FROM zen_live.ci_sessions;";
 
 
 
@@ -38,7 +49,7 @@ var connection = mysql.createConnection(connString);
 
 connection.connect();
 
-_.forEach(userStatements, function(v, k){
+_.forEach(statements, function(v, k){
   var execQuery  = function(cb){
     connection.query(v, function(err, data, fields) {
       if (err){
@@ -49,102 +60,121 @@ _.forEach(userStatements, function(v, k){
     });
   }
 
-  userQueries[k] = execQuery; 
+  queries[k] = execQuery; 
 });
 
-//Transformers
 
-var tUsersAgreements = function(results){
-  _.forEach(results.users, function(v, k){
-    var result = _.where(results.agreements, {user_id: v.id});
-    var agreements = result ? result : [];
-    v.agreements = agreements;
-  });
-  
-}
 
-var tUsersProfiles =  function(results){
-  _.forEach(results.users, function(v, k){
-    var result = _.where(results.profiles, {user_id: v.id});
-    var profiles = result ? result : [];
-    v.profiles = profiles;
-  });
-}
-
-var tUserDojos = function(results){
-  _.forEach(results.users, function(v, k){
-    var result = _.where(results.usersDojos, {user_id: v.id});
-    var usersDojos = result ? result : [];
-    v.usersDojos = usersDojos;
-  });
-}
-
-// Individual query cb
-var writeFile = function(filename){
-  
-  return function(err, data){
-    if(err){
-      throw err;
-    }
-
-    fs.writeFileSync(filename, JSON.stringify(data));
-    console.log("%s finished", filename);
-  }
-}
 
 //users - extract, transform and write file
-async.parallel(userQueries, function(err, results) {
+async.parallel(queries, function(err, results) {
   if(err){
     throw err;
   }
-  tUsersAgreements(results);
-  tUsersProfiles(results);
-  tUserDojos(results);
 
-  fs.writeFileSync('./data/users.json', JSON.stringify(results.users));
-  console.log("./data/users.json finished");
+  var newAgreements = _.map(results.agreements, function(agreement){
+    var user =  _.findWhere(results.users, {mysql_user_id: agreement.mysql_user_id});
+    if(user){
+      agreement.user_id = user.uuid;
+    } else {
+      agreement.user_id = "";
+      console.log("[agreements] No user found for: ", agreement);
+    }
+
+    agreement.id = agreement.uuid;
+    delete agreement.uuid;
+
+    return agreement;
+  });
+
+  var newProfiles = _.map(results.profiles, function(profile){
+    var user =  _.findWhere(results.users, {mysql_user_id: profile.mysql_user_id});
+    if(user){
+      profile.user_id = user.uuid;  
+    } else {
+      profile.user_id = "";
+      console.log("[profiles] No user found for: ",profile);
+    }
+
+    if(!profile.mysql_dojo_id){
+      profile.mysql_dojo_id = "";
+    }
+
+    profile.id = profile.uuid;
+    delete profile.uuid;
+
+    return profile;
+  });
+
+  var newDojos = _.map(results.dojos, function(dojo){
+    if(dojo.created == "0000-00-00 00:00:00"){
+      dojo.created = "-infinity";
+    }
+
+    if(!dojo.deleted_at){
+      dojo.deleted_at = "-infinity";
+    }
+
+    if(!dojo.verified_at){
+      dojo.verified_at = "-infinity";
+    }
+
+
+    dojo.id = dojo.uuid;
+    delete dojo.uuid;
+
+    return dojo; 
+  });
+
+  var newUsers = _.map(results.users, function(user){
+    if(user.created == "0000-00-00 00:00:00"){
+      user.created = "-infinity";
+    }
+
+    if(user.modified == "0000-00-00 00:00:00"){
+      user.modified = "-infinity";
+    }
+
+    return user;
+  });
+
+  //console.log(results.usersDojos);
+
+  var newUserDojos = _.map(results.usersDojos, function(userDojo){
+    var user = _.findWhere(results.users, {mysql_user_id: userDojo.mysql_user_id});
+    var dojo = _.findWhere(results.dojos, {mysql_dojo_id: userDojo.mysql_dojo_id});
+
+    if(user){
+      userDojo.user_id = user.uuid;
+    } else{
+      userDojo.user_id = "";
+      console.log("[usersDojos] No user found for: ", userDojo);
+    }
+
+    if(dojo){
+      userDojo.dojo_id = dojo.id;
+    } else {
+      userDojo.dojo_id = "";
+      console.log("[usersDojos] No dojo found for: ", userDojo);
+    }
+
+    return userDojo;
+  });
+
+  fs.writeFileSync("./data/countries.json", JSON.stringify(results.countries));
+
+  fs.writeFileSync("./data/usersDojos.json", JSON.stringify(newUserDojos));
+
+  fs.writeFileSync("./data/dojos.json", JSON.stringify(newDojos));
+
+  fs.writeFileSync("./data/profiles.json", JSON.stringify(newProfiles));
+
+  fs.writeFileSync("./data/agreements.json", JSON.stringify(newAgreements));
+
+  fs.writeFileSync("./data/users.json", JSON.stringify(newUsers));
+
+  console.log("complete");
 });
 
-
-var execIndividualQueries = function(statement){
-  return function(cb){
-    connection.query(statement, function(err, data, fields) {
-      if (err){
-        return cb(err);
-      }
-      return cb(null, data); 
-    }); 
-  }
-}
-
-
-function execDojoQuery(cb){
-  execIndividualQueries(dojoStatement)(cb);
-}
-
-
-function execLoginQuery(cb){
-  execIndividualQueries(loginStatement)(cb);
-}
-
-
-function execLoginAttemptsQuery(cb){
-  execIndividualQueries(loginAttemptsStatement)(cb);
-}
-
-
-function execSessionQuery(cb){
-  execIndividualQueries(sessionsStatement)(cb);
-}
-
-function execCountriesQuery(cb){
-  execIndividualQueries(countriesStatement)(cb);
-}
-
-execLoginQuery(writeFile("./data/login.json"));
-execLoginAttemptsQuery(writeFile("./data/loginAttempts.json"));
-execSessionQuery(writeFile("./data/sessions.json"))
-execDojoQuery(writeFile("./data/dojos.json"));
-execCountriesQuery(writeFile("./data/countries.json"));
 
 connection.end();
