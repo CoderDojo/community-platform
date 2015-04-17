@@ -15,16 +15,16 @@ statements.users =  "SELECT UUID() as uuid, id as mysql_user_id, username," +
                         "email, level,activated," +
                         "banned ,ban_reason,last_ip," + 
                         "last_login ,created," +
-                        "modified FROM zen_live.users";
+                        "modified FROM users";
                         
 statements.agreements = "SELECT UUID() as uuid, user_id AS mysql_user_id, full_name, ip_address," + 
-                            " timestamp, agreement_version FROM zen_live.charter_agreement;";
+                            " timestamp, agreement_version FROM charter_agreement;";
 
-statements.profiles = "SELECT UUID() as uuid , user_id AS mysql_user_id, role, dojo FROM `zen_live`.`user_profiles`;"
+statements.profiles = "SELECT UUID() as uuid , user_id AS mysql_user_id, role, dojo FROM user_profiles;"
 
-statements.usersDojos = "SELECT UUID() as id, user_id AS mysql_user_id, dojo_id AS mysql_dojo_id, owner FROM zen_live.user_dojos;"
+statements.usersDojos = "SELECT UUID() as id, user_id AS mysql_user_id, dojo_id AS mysql_dojo_id, owner FROM user_dojos;"
 
-statements.countries = "SELECT UUID() as id, continent, alpha2, alpha3, number, country_name FROM zen_live.countries";
+statements.countries = "SELECT UUID() as id, continent, alpha2, alpha3, number, country_name FROM countries";
 
 statements.dojos = "SELECT UUID() as uuid, dojos.id as mysql_dojo_id, dojos.name, dojos.creator, dojos.created, dojos.verified_at," + 
                 " dojos.verified_by, dojos.verified, dojos.need_mentors, dojos.stage, dojos.time, dojos.country," + 
@@ -37,11 +37,11 @@ statements.dojos = "SELECT UUID() as uuid, dojos.id as mysql_dojo_id, dojos.name
 console.log(statements.dojos);
 
 
-statements.logins = "SELECT * FROM zen_live.user_autologin;";
+statements.logins = "SELECT * FROM user_autologin;";
 
-statements.loginAttempts = "SELECT * FROM zen_live.login_attempts;";
+statements.loginAttempts = "SELECT * FROM login_attempts;";
 
-statements.sessions = "SELECT * FROM zen_live.ci_sessions;";
+statements.sessions = "SELECT * FROM ci_sessions;";
 
 
 
