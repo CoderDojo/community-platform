@@ -45,8 +45,6 @@ seneca.ready(function() {
                      dojo.deleted + "','" + dojo.deleted_by + "','"  + dojo.deleted_at + "','" + dojo.private + "','" +  dojo.url_slug + 
                      "','" + dojo.continent +  "','"  + dojo.alpha2 + "','" + dojo.alpha3 + "'," + dojo.country_number + ",'" + pgEscapeString(dojo.country_name) + "')";
 
-        console.log("query", query);
-        
         client.query(query, function(err, result) {
           if(err) {
             console.error('error running query', err);
