@@ -34,8 +34,6 @@ statements.dojos = "SELECT UUID() as uuid, dojos.id as mysql_dojo_id, dojos.name
                 " countries.continent, countries.alpha2, countries.alpha3, countries.number as country_number, countries.country_name" +
                 " FROM dojos, countries WHERE countries.alpha2 = dojos.country;";
 
-console.log(statements.dojos);
-
 
 statements.logins = "SELECT * FROM user_autologin;";
 
@@ -107,6 +105,11 @@ async.parallel(queries, function(err, results) {
   });
 
   var newDojos = _.map(results.dojos, function(dojo){
+    var creator = _.findWhere(results.users, {mysql_user_id: dojo.creator});
+
+    if(!creator){
+      console.log("[dojos] creator not found for dojo.id: ", dojo.creator);
+    }
     if(dojo.created == "0000-00-00 00:00:00"){
       dojo.created = "-infinity";
     }
@@ -119,6 +122,9 @@ async.parallel(queries, function(err, results) {
       dojo.verified_at = "-infinity";
     }
 
+    if(creator){
+      dojo.creator = creator.uuid;
+    }
 
     dojo.id = dojo.uuid;
     delete dojo.uuid;
