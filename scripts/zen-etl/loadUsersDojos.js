@@ -4,53 +4,36 @@ var fs = require('fs');
 var seneca = require('seneca')();
 var async = require('async');
 
+var _ = require('lodash');
 var usersDojos = JSON.parse(fs.readFileSync('./data/usersDojos.json', 'utf8'));
 var plugin = "load-usersdojos";
 
 var config = require('config');
 var ENTITY_NS = "cd/usersdojos";
-var pg = require('pg');
-var conString = config.postgresql.connstring;
+
+seneca.use('postgresql-store', config['postgresql-store']);
 
 seneca.ready(function(){
   seneca.add({role: plugin, cmd: 'insert'}, function(args, done){
-    var client = new pg.Client(conString);
+   
+    function createUsersDojos(userDojo, cb){
+      userDojo.id$ = userDojo.id;
 
-    client.connect(function(err){
-      if(err){
-        console.error('could not connect to postgres', err);
-        return done(err);
-      }
+      delete userDojo.id;
 
-      function createUsersDojos(userDojo, cb){
-        var query = "INSERT INTO cd_usersdojos (mysql_user_id, mysql_dojo_id, owner, user_id, dojo_id, id)" + 
-        "VALUES (" + "'" + userDojo.mysql_user_id + "','" + userDojo.mysql_dojo_id + "', '" + userDojo.owner + 
-          "', '" + userDojo.user_id + "', '" + userDojo.dojo_id + "','" +  userDojo.id +  "')";
+      var user_dojo_ent = seneca.make(ENTITY_NS);
+      _.assign(user_dojo_ent, userDojo);
 
-        client.query(query, function(err, result){
-          if(err){
-            console.error('error running query', err);
-            return cb(err);
-          }
+      user_dojo_ent.save$(cb);
+    }
 
-          return cb();
-        });
-      }
+    var loadUsersDojos = function(done){
+      async.eachSeries(usersDojos, createUsersDojos, done);
+    };
 
-      var loadUsersDojos = function(done){
-        async.eachSeries(usersDojos, createUsersDojos, done);
-      }
-
-      async.series([
-        loadUsersDojos
-      ], function(err){
-        if(err){
-          return done(err);
-        }
-        client.end();
-        done();
-      })
-    });
+    async.series([
+      loadUsersDojos
+    ], done);
 
   });
 
