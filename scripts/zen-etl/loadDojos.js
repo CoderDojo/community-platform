@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var fs = require('fs');
 var seneca = require('seneca')();
 var async = require('async');
@@ -15,40 +16,33 @@ seneca.use('postgresql-store', config['postgresql-store']);
 seneca.ready(function() {
   seneca.add({ role: plugin, cmd: 'insert' }, function (args, done) {
 
-    function createDojo(dojo, cb){
+    function createDojo(dojo, cb) {
       dojo.id$ = dojo.id;
       delete dojo.country;
       delete dojo.id;
-      seneca.make(ENTITY_NS).save$(dojo, function(err, dojo){
-        if(err){
-          return cb(err);
-        }
 
-        return cb();
-      });     
+      var dojo_ent = seneca.make(ENTITY_NS);
+      _.assign(dojo_ent, dojo);
+
+      dojo_ent.save$(cb);
     }
 
     var loadDojos = function (done) {
-      async.eachSeries(dojos, createDojo , done);
+      async.eachSeries(dojos, createDojo, done);
     };
 
     async.series([
       loadDojos
-    ], function(err){
-      if(err){
-        return done(err);
-      }
-      done();
-    });
+    ], done);
 
   });
 
-  seneca.act({ role: plugin, cmd: 'insert', timeout: false }, function(err){
+  seneca.act({ role: plugin, cmd: 'insert', timeout: false }, function(err) {
     if(err){
-      console.log(err);
+      console.error(err);
       process.exit(1);
     } else{
-      console.log("dojos complete");
+      console.log('dojos complete');
       process.exit(0);
     }   
   });
