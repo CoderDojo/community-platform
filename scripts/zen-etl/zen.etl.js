@@ -20,7 +20,7 @@ statements.users =  "SELECT UUID() as uuid, id as mysql_user_id, username," +
 statements.agreements = "SELECT UUID() as uuid, user_id AS mysql_user_id, full_name, ip_address," + 
                             " timestamp, agreement_version FROM charter_agreement;";
 
-statements.profiles = "SELECT UUID() as uuid , user_id AS mysql_user_id, role, dojo FROM user_profiles;"
+statements.profiles = "SELECT UUID() as uuid , user_id AS mysql_user_id, role, dojo AS mysql_dojo_id FROM user_profiles;"
 
 statements.usersDojos = "SELECT UUID() as id, user_id AS mysql_user_id, dojo_id AS mysql_dojo_id, owner FROM user_dojos;"
 
@@ -75,7 +75,7 @@ async.parallel(queries, function(err, results) {
     if(user){
       agreement.user_id = user.uuid;
     } else {
-      agreement.user_id = "";
+      agreement.user_id = "NULL";
       console.log("[agreements] No user found for: ", agreement);
     }
 
@@ -86,16 +86,21 @@ async.parallel(queries, function(err, results) {
   });
 
   var newProfiles = _.map(results.profiles, function(profile){
-    var user =  _.findWhere(results.users, {mysql_user_id: profile.mysql_user_id});
+    var user = _.findWhere(results.users, {mysql_user_id: profile.mysql_user_id});
+    var dojo = _.findWhere(results.dojos, {mysql_dojo_id: profile.mysql_dojo_id});
+
     if(user){
       profile.user_id = user.uuid;  
     } else {
-      profile.user_id = "";
+      profile.user_id = "NULL";
       console.log("[profiles] No user found for: ",profile);
     }
 
-    if(!profile.mysql_dojo_id){
-      profile.mysql_dojo_id = "";
+    if(dojo){
+      profile.dojo_id = dojo.uuid;
+    } else {
+      profile.dojo_id = "NULL";
+      console.log("[profiles] No dojo found for: ", profile);
     }
 
     profile.id = profile.uuid;
@@ -153,14 +158,14 @@ async.parallel(queries, function(err, results) {
     if(user){
       userDojo.user_id = user.uuid;
     } else{
-      userDojo.user_id = "";
+      userDojo.user_id = "NULL";
       console.log("[usersDojos] No user found for: ", userDojo);
     }
 
     if(dojo){
       userDojo.dojo_id = dojo.id;
     } else {
-      userDojo.dojo_id = "";
+      userDojo.dojo_id = "NULL";
       console.log("[usersDojos] No dojo found for: ", userDojo);
     }
 
