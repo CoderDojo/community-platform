@@ -22,7 +22,6 @@ https://www.mongodb.org/downloads#previous
 PostgreSQL 9.3.x
 http://www.postgresql.org/download/
 
-
 To import dojos data from the previous platform a MySQL server is required as well:
 
 MySQL 5.6.x
@@ -61,10 +60,36 @@ make db-populate
 ```
 ensure `psql` command is available before running the above
 
+## Elasticsearch (1.4+)
+https://www.elastic.co/downloads/elasticsearch
+
+### Indexing
+
+Whenever entities are created/updated or removed, they are indexed in elasticsearch. All entities are stored within one 
+single index which default name is ``cd-zen-platform-development``.
+
+The configuration for the ES cluster are in ``cp-*-service/config/default.yml`` for each service.
+
+### Mappings
+
+Search mappings are defined in ``cp-*-service/es-options.js``.
+
+### Strings
+
+Strings are sometime mapped as non analyzed:
+
+```
+{
+	type: 'string',
+	index: 'not_analyzed'
+}
+```
+This is to disable the default string analyzer which splits strings for indexing. Our ids contain dashes. When 
+elasticsearch analyses ids, it becomes impossible to search on ids fields that are analyzed. Hence we disable the analyzer.
+
 ## Data import
 
 The above restores countries and dojos data from sql dumps. Alternatively, countries data can be imported from the geonames.org, and dojos from the mysql database (previos zen platform).
-
 
 ### Import countries and geonames
 
@@ -92,6 +117,14 @@ to import dojos, users, and related data into the postgresql database
 node scripts/add-geonames-data.js
 ```
 to resolve / reverse geocode coordinates of the existing dojos and add geonames data to dojos (place, administrative areas)
+
+### Index dojos in elasticsearch
+
+* in the cp-dojos-service repository run:
+```
+node scripts/es-index-dojos-data.js
+```
+
 
 
 ## Running the platform
