@@ -75,7 +75,7 @@ async.parallel(queries, function(err, results) {
     if(user){
       agreement.user_id = user.uuid;
     } else {
-      agreement.user_id = "NULL";
+      agreement.user_id = null;
       console.log("[agreements] No user found for: ", agreement);
     }
 
@@ -92,14 +92,14 @@ async.parallel(queries, function(err, results) {
     if(user){
       profile.user_id = user.uuid;  
     } else {
-      profile.user_id = "NULL";
+      profile.user_id = null;
       console.log("[profiles] No user found for: ",profile);
     }
 
     if(dojo){
       profile.dojo_id = dojo.uuid;
     } else {
-      profile.dojo_id = "NULL";
+      profile.dojo_id = null;
       console.log("[profiles] No dojo found for: ", profile);
     }
 
@@ -158,14 +158,14 @@ async.parallel(queries, function(err, results) {
     if(user){
       userDojo.user_id = user.uuid;
     } else{
-      userDojo.user_id = "NULL";
+      userDojo.user_id = null;
       console.log("[usersDojos] No user found for: ", userDojo);
     }
 
     if(dojo){
       userDojo.dojo_id = dojo.id;
     } else {
-      userDojo.dojo_id = "NULL";
+      userDojo.dojo_id = null;
       console.log("[usersDojos] No dojo found for: ", userDojo);
     }
 
