@@ -32,11 +32,8 @@ You might need to update postgres and es connection strings in the Makefile
 This removes the ES index if it exists.
  
 ###6) Make any required changes to ```community-platform\scripts\zen-etl\config\default.yml``` and then run
- 
-```import_all.sh```
 
-in ```community-platform\scripts\zen-etl``` . This will import users and dojos and related data from the json dumps in 
-the data folder and into the postgresql database
+```./import_all.sh``` in ```community-platform\scripts\zen-etl``` .This will import users and dojos and related data from the json dumps in the data folder and into the postgresql database
  
 ###7) In cp-zen-platform run
 
