@@ -35,7 +35,7 @@ This removes the ES index if it exists.
  
 ```import_all.sh```
 
-in ```community-platform\scripts\zen-etl```. This will import users and dojos and related data from the json dumps in 
+in ```community-platform\scripts\zen-etl``` . This will import users and dojos and related data from the json dumps in 
 the data folder and into the postgresql database
  
 ###7) In cp-zen-platform run
