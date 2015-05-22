@@ -37,34 +37,34 @@ This removes the ES index if it exists.
  
 ###7) In cp-zen-platform run
 
-```./start.sh "scripts/add-geonames-data.js" development```
+```./start.sh development scripts/add-geonames-data.js```
 
 This will reverse geocode dojos and fill in geo data related fields admin1-4 codes and names, city, country, region, etc.
  
 ###8) In cp-zen-platform run
 
-```./start.sh "scripts/generate-slugs.js" development```
+```./start.sh development scripts/generate-slugs.js```
 
 This will generate the urls for dojos e.g. /ie/waterford/waterford/my-downtown-dojo
  
 ###9) In cp-dojos-service run
 
-```./start.sh scripts/es-index-dojos-data.js development```
+```./start.sh development scripts/es-index-dojos-data.js```
 
 This will index the dojos in ES
  
 ###10) In cp-countries-service run
 
-```./start.sh scripts/countries-import.js development```
+```./start.sh development scripts/countries-import.js```
 
 then
 
-```./start.sh "scripts/geonames-import.js --country=no-country" development```
-```./start.sh "scripts/geonames-import.js --country=IE" development```
+```./start.sh development scripts/geonames-import.js --country=no-country```
+```./start.sh development scripts/geonames-import.js --country=IE```
 
 ... and whichever other countries you need you can also run
 
-```./start.sh "scripts/geonames-import.js --country=all" development```
+```./start.sh development scripts/geonames-import.js --country=all```
 
 but beware of the time it will take to complete
 
