@@ -9,9 +9,9 @@ The 001.do.init-db.sql will run at system setup and will create your database in
 
 If you need to do make any database schema changes, you do so by creating a migration sql file as follows:
 
-*Create another *.sql file under the `migrations` directory. 
+* Create another *.sql file under the `migrations` directory. 
 
-*The file name need to follow this convention: [version].[action].[optional-description].sql See the details bellow: 
+* The file name need to follow this convention: [version].[action].[optional-description].sql See the details bellow: 
 
 	* Version must be a number, but you may start and increment the numbers in any way you'd like.
 
@@ -21,9 +21,9 @@ If you need to do make any database schema changes, you do so by creating a migr
 
 Here is an example:
 
-*create `002.do.add-test-column.sql` file in `scripts/database/pg/migrations` directory;
+* create `002.do.add-test-column.sql` file in `scripts/database/pg/migrations` directory;
 
-*the script contains the following:
+* the script contains the following:
 
 ```sql
 DO $$ 
@@ -42,10 +42,10 @@ DO $$
 $$
 ```
 
-*this script adds two new columns, only if they don't already exists, otherwise it will just display an error saying the columns are already in there.
+* this script adds two new columns, only if they don't already exists, otherwise it will just display an error saying the columns are already in there.
 
-*to apply this changes to the DB schema you have to run the migration script in that service, like this:
+* to apply this changes to the DB schema you have to run the migration script in that service, like this:
 
 `./start.sh development scripts/migrate-psql-db.js`
 
-*this applies only the changes that haven't been applied yet to the schema (see the Postgrator documentation for more informations).
+* this applies only the changes that haven't been applied yet to the schema (see the Postgrator documentation for more informations).
