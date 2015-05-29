@@ -20,8 +20,6 @@ statements.users =  "SELECT UUID() as uuid, id as mysql_user_id, username," +
 statements.agreements = "SELECT UUID() as uuid, user_id AS mysql_user_id, full_name, ip_address," + 
                             " timestamp, agreement_version FROM charter_agreement;";
 
-statements.profiles = "SELECT UUID() as uuid , user_id AS mysql_user_id, role, dojo AS mysql_dojo_id FROM user_profiles;"
-
 statements.usersDojos = "SELECT UUID() as id, user_id AS mysql_user_id, dojo_id AS mysql_dojo_id, owner FROM user_dojos;"
 
 statements.countries = "SELECT UUID() as id, continent, alpha2, alpha3, number, country_name FROM countries";
@@ -83,30 +81,6 @@ async.parallel(queries, function(err, results) {
     delete agreement.uuid;
 
     return agreement;
-  });
-
-  var newProfiles = _.map(results.profiles, function(profile){
-    var user = _.findWhere(results.users, {mysql_user_id: profile.mysql_user_id});
-    var dojo = _.findWhere(results.dojos, {mysql_dojo_id: profile.mysql_dojo_id});
-
-    if(user){
-      profile.user_id = user.uuid;  
-    } else {
-      profile.user_id = null;
-      console.log("[profiles] No user found for: ",profile);
-    }
-
-    if(dojo){
-      profile.dojo_id = dojo.uuid;
-    } else {
-      profile.dojo_id = null;
-      console.log("[profiles] No dojo found for: ", profile);
-    }
-
-    profile.id = profile.uuid;
-    delete profile.uuid;
-
-    return profile;
   });
 
   var newDojos = _.map(results.dojos, function(dojo){
@@ -177,8 +151,6 @@ async.parallel(queries, function(err, results) {
   fs.writeFileSync("./data/usersDojos.json", JSON.stringify(newUserDojos));
 
   fs.writeFileSync("./data/dojos.json", JSON.stringify(newDojos));
-
-  fs.writeFileSync("./data/profiles.json", JSON.stringify(newProfiles));
 
   fs.writeFileSync("./data/agreements.json", JSON.stringify(newAgreements));
 
