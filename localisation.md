@@ -13,7 +13,7 @@ All the language translation files are stored in the ````web\locale```` folder i
         msgid "Yes"  
         msgstr "Yes"  
     `web\locale\de_DE\mesages.po`:  
-        msgid "Yes"
+        msgid "Yes"  
         msgstr "Ja"
    
   
