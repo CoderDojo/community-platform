@@ -2,8 +2,8 @@
 
 We use [NodeBB](https://nodebb.org/) for both the Adult and Child Forums. There are four main elements to this in the Community Platform:
 
-* the NodeBB installation itself, at the time of witing we are using version 0.7.
-* the CoderDojo SSO plugin for NodeBB, this is a plugin for NodeBB that allows a user of the Forum to log in using thier Community Platform account. This plugin is located here: [github.com/CoderDojo/nodebb-plugin-sso-coderdojo](https://github.com/CoderDojo/nodebb-plugin-sso-coderdojo)
+* the NodeBB installation itself, at the time of writing we are using version 0.7.
+* the CoderDojo SSO plugin for NodeBB, this is a plugin for NodeBB that allows a user of the Forum to log in using their Community Platform account. This plugin is located here: [github.com/CoderDojo/nodebb-plugin-sso-coderdojo](https://github.com/CoderDojo/nodebb-plugin-sso-coderdojo)
 * the CoderDojo Theme plugin for NodeBB, this plugin is located here: [github.com/CoderDojo/nodebb-theme-coderdojo](https://github.com/CoderDojo/nodebb-theme-coderdojo)
 * the OAuth2 support in cp-zen-platform, this allows the SSO plugin to work. This code lives in the [cp-users-service](https://github.com/CoderDojo/cp-users-service)
 
@@ -31,7 +31,7 @@ Then to install the plugins to your local NodeBB (assuming you've install NodeBB
 
 # Environment Variables & Config Settings
 
-When deploying NodeBB the following environment variables need to be set, and also need to match up on the Community Platform side. The following env vars are used in the `nodebb-plugin-sso` [library.js] 
+When deploying NodeBB the following environment variables need to be set, and also need to match up on the Community Platform side. The following environment vars are used in the `nodebb-plugin-sso` [library.js] 
 
 
 * `CODERDOJO_COMMUNITY_PLATFORM` - the base url of the Community Platform, defaults to `http://localhost:8000` for local development
