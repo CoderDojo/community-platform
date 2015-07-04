@@ -4,29 +4,72 @@ We use [NodeBB](https://nodebb.org/) for both the Adult and Child Forums. There 
 
 * the NodeBB installation itself, at the time of writing we are using version 0.7.
 * the CoderDojo SSO plugin for NodeBB, this is a plugin for NodeBB that allows a user of the Forum to log in using their Community Platform account. This plugin is located here: [github.com/CoderDojo/nodebb-plugin-sso-coderdojo](https://github.com/CoderDojo/nodebb-plugin-sso-coderdojo)
-* the CoderDojo Theme plugin for NodeBB, this plugin is located here: [github.com/CoderDojo/nodebb-theme-coderdojo](https://github.com/CoderDojo/nodebb-theme-coderdojo)
+* the CoderDojo Lavender Theme plugin for NodeBB, this plugin is located here: [github.com/CoderDojo/nodebb-theme-cd-lavender](https://github.com/CoderDojo/nodebb-theme-cd-lavender)
 * the OAuth2 support in cp-zen-platform, this allows the SSO plugin to work. This code lives in the [cp-users-service](https://github.com/CoderDojo/cp-users-service)
 
 # Local development
 
 The Forums are external to the main Community Platform, and as such have their own development and deployment lifecycle. To develop CoderDojo SSO and Theme plugins, this is best done locally:
 
-* install NodeBB locally following the instructions [here](https://docs.nodebb.org/en/latest/installing/os.html) or install directly from github.
-
-* git clone the two plugins above somewhere locally, e.g.
+* git clone the theme somewhere locally, e.g.
 
 ```
-~/work $ git clone git@github.com:CoderDojo/nodebb-theme-coderdojo.git
-~/work $ cd nodebb-theme-coderdojo
-~/work/nodebb-theme-coderdojo $ npm install
-~/work/nodebb-theme-coderdojo $ npm link .
+~/work $ git clone git@github.com:CoderDojo/nodebb-theme-cd-lavender.git
+~/work $ cd nodebb-theme-cd-lavender
+~/work/nodebb-theme-cd-lavender $ npm install
+~/work/nodebb-theme-cd-lavender $ npm link .
 ```
 
-Then to install the plugins to your local NodeBB (assuming you've install NodeBB in `~/work/NodeBB`):
+* git clone the sso plugin somewhere locally, e.g.
 
 ```
-~/work/NodeBB $ npm link nodebb-theme-coderdojo
-~/work/NodeBB $ ./nodebb restart
+~/work $ git clone git@github.com:CoderDojo/nodebb-plugin-sso-coderdojo.git
+~/work $ cd nodebb-plugin-sso-coderdojo
+~/work/nodebb-theme-cd-lavender $ npm install
+~/work/nodebb-theme-cd-lavender $ npm link .
+```
+
+* git clone NodeBB, and link plugin and theme
+
+```
+~/work $ git clone -b v0.7.x https://github.com/NodeBB/NodeBB.git
+~/work $ cd NodeBB
+~/work/NodeBB $ npm install
+~/work/NodeBB $ npm link nodebb-theme-cd-lavender
+~/work/NodeBB $ npm link nodebb-plugin-sso-coderdojo
+```
+
+* copy coderdojo setup data.
+
+```
+~/work/NodeBB $ cp ./node_modules/nodebb-theme-cd-lavender/install/data/* ./install/data
+~/work/NodeBB $ ./nodebb setup
+~/work/NodeBB $ ./nodebb start
+```
+
+* choose theme using admin page
+
+```
+http://localhost:4567/admin
+Appearance >> Themes >> <Use Coder Dojo Lavender Theme>
+Restart NodeBB (either from admin Dashboard >> Restart or terminal ./nodebb restart)
+```
+
+* upload logo using admin page
+
+```
+http://localhost:4567/admin
+Site Logo >> Upload Logo
+Logo can be found at nodebb-theme-cd-lavender/static/images/logo.png
+```
+* other suggested admin settings
+
+```
+http://localhost:4567/admin
+Settings >> General >> Site Tite: forum
+Setting >> General >> Browser Title: CoderDojoBB
+Settings >> User >> Allow local registration: disabled
+Settings >> User >> Allow local login: disabled (make sure sso plugin is working first, or you could lock yourself out!)
 ```
 
 # Environment Variables & Config Settings
@@ -49,3 +92,7 @@ On the cp-zen-platform side, there is config option of node in `options.base`:
 https://github.com/CoderDojo/cp-zen-platform/blob/9076bd56d7b0c58312cda0ab0e2c37304c834aa8/web/options.base.js#L53
 
 This is the external url for the Adult Forums.
+
+## Screenshot
+
+[![Home View](http://i.imgur.com/6Oxfdj1.png)](http://i.imgur.com/6Oxfdj1.png)
