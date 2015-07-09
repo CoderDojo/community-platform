@@ -59,9 +59,18 @@ Restart NodeBB (either from admin Dashboard >> Restart or terminal ./nodebb rest
 
 ```
 http://localhost:4567/admin
-Site Logo >> Upload Logo
-Logo can be found at nodebb-theme-cd-lavender/static/images/logo.png
+Settings >> General>> Site Logo >> Upload Logo
+Logo can be uploaded from your local checkout of nodebb-theme-cd-lavender/static/images/logo.png
 ```
+
+* upload favicon using admin page
+
+```
+http://localhost:4567/admin
+Settings >> General>> Site Logo >> Favicon
+Icon can be uploaded from your local checkout of nodebb-theme-cd-lavender/static/images/favicon.ico
+```
+
 * other suggested admin settings
 
 ```
