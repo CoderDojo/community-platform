@@ -2,7 +2,7 @@
 
 All the language translation files are stored in the ````web\locale```` folder in the appropriate language folder named according to the language's code eg. en_US for English in the United States.
 
-##Adding a new Language
+## Adding a new Language
 
 1. Create a folder with the appropriate language code
 2. Create a messages.po file
@@ -15,9 +15,10 @@ All the language translation files are stored in the ````web\locale```` folder i
     `web\locale\de_DE\mesages.po`:  
         msgid "Yes"  
         msgstr "Ja"
-   
+
+4. Add the new language to the [config/languages.js](https://github.com/CoderDojo/cp-zen-platform/blob/780e98584f1134a1e9166758b6fb5ff99c654647/web/config/languages.js) file.
   
 
-##Switching Languages
+## Switching Languages
 
 The platform makes use of the ````Accept-Language```` header to determine which messages.po file to use. This can be changed by modifying the language settings in the browser. The language initial language setting can be overriden by selecting the desired language from the drop down in the navigation bar and it will be saved for subsequent visits.
