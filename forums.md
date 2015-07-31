@@ -29,7 +29,15 @@ The Forums are external to the main Community Platform, and as such have their o
 ~/work/nodebb-theme-cd-lavender $ npm link .
 ```
 
-* git clone NodeBB, and link plugin and theme
+* git clone the write-api plugin somewhere locally, e.g.
+```
+~/work $ git clone git@github.com:CoderDojo/nodebb-plugin-write-api.git
+~/work $ cd nodebb-plugin-write-api
+~/work/nodebb-plugin-write-api $ npm install
+~/work/nodebb-plugin-write-api $ npm link .
+```
+
+* git clone NodeBB, and link plugins and theme
 
 ```
 ~/work $ git clone -b v0.7.x https://github.com/NodeBB/NodeBB.git
@@ -37,6 +45,7 @@ The Forums are external to the main Community Platform, and as such have their o
 ~/work/NodeBB $ npm install
 ~/work/NodeBB $ npm link nodebb-theme-cd-lavender
 ~/work/NodeBB $ npm link nodebb-plugin-sso-coderdojo
+~/work/NodeBB $ npm link nodebb-plugin-write-api
 ```
 
 * copy coderdojo setup data.
@@ -53,6 +62,15 @@ The Forums are external to the main Community Platform, and as such have their o
 http://localhost:4567/admin
 Appearance >> Themes >> <Use Coder Dojo Lavender Theme>
 Restart NodeBB (either from admin Dashboard >> Restart or terminal ./nodebb restart)
+```
+
+* set up api token for profile syncing
+
+```
+http://localhost:4567/admin/plugins/write-api
+Master Tokens >> Create Token
+Copy the token into your local-env.js like this:
+NODEBB_TOKEN: 'dc729193-f80c-4c5f-b75c-7a70f16b6e7e'
 ```
 
 * upload logo using admin page
