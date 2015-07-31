@@ -69,7 +69,9 @@ Restart NodeBB (either from admin Dashboard >> Restart or terminal ./nodebb rest
 ```
 http://localhost:4567/admin/plugins/write-api
 Master Tokens >> Create Token
-Copy the token into your local-env.js like this:
+Copy the token and optionally the forum address into your local-env.js like this:
+NODEBB_HOST: 'localhost',
+NODEBB_PORT: 4567,
 NODEBB_TOKEN: 'dc729193-f80c-4c5f-b75c-7a70f16b6e7e'
 ```
 
