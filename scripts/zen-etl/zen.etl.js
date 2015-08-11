@@ -3,6 +3,7 @@ var _ = require('lodash');
 var async = require('async');
 var fs = require('fs');
 var uuid = require('node-uuid');
+var geocoder = require('node-geocoder')('google', 'https', {'apiKey':process.env.GEOCODER_API_KEY || 'YOUR_API_KEY'});
 
 var statements = {}, queries = {}, championEmails = [];
 
@@ -203,19 +204,41 @@ async.parallel(queries, function(err, results) {
     return user;
   });
 
-  //fs.writeFileSync("./data/countries.json", JSON.stringify(results.countries));
+  async.eachSeries(newDojos, function iterator(dojo, cb){
+    if(!dojo.coordinates) return async.setImmediate(function(){cb(null, dojo)});
 
-  //fs.writeFileSync("./data/usersDojos.json", JSON.stringify(newUserDojos));
+    geocoder.reverse({lat:dojo.coordinates.split(',')[0], lon:dojo.coordinates.split(',')[1]}, function(err, res) {
+      res = res[0];
+      
+      if(!res) return async.setImmediate(function(){cb(null, dojo)});
 
-  fs.writeFileSync("./data/dojos.json", JSON.stringify(newDojos));
+      console.log(res);
+      dojo.address1 = (res.streetNumber || '') + ' ' + (res.streetName || '');
+      dojo.place = {'name': res.city};
+      dojo.state = {"toponymName": res.state};
+      dojo.country = {"countryName": res.country, "alpha2": res.countryCode};
+      dojo.admin1_code = res.stateCode;
+      dojo.admin1_name = res.state;
+      async.setImmediate(function(){cb(null, dojo)});
+    });
+  }, writeFiles)
 
-  //fs.writeFileSync("./data/agreements.json", JSON.stringify(newAgreements));
+  function writeFiles(){
+    //fs.writeFileSync("./data/countries.json", JSON.stringify(results.countries));
 
-  fs.writeFileSync("./data/users.json", JSON.stringify(newUsers));
+    //fs.writeFileSync("./data/usersDojos.json", JSON.stringify(newUserDojos));
 
-  //fs.writeFileSync("./data/championEmails.json", JSON.stringify(championEmails))
+    fs.writeFileSync("./data/dojos.json", JSON.stringify(newDojos));
 
-  console.log("complete");
+    //fs.writeFileSync("./data/agreements.json", JSON.stringify(newAgreements));
+
+    fs.writeFileSync("./data/users.json", JSON.stringify(newUsers));
+
+    //fs.writeFileSync("./data/championEmails.json", JSON.stringify(championEmails))
+
+    console.log("complete");
+  }
+  
 });
 
 

@@ -11,8 +11,9 @@
     "async": "^1.4.0",
     "lodash": "^3.10.1",
     "mysql": "^2.8.0",
+    "node-geocoder": "^2.22.0",
     "node-uuid": "^1.4.3",
-    "seneca": "0.6.1",
+    "seneca": "0.6.4",
     "seneca-postgresql-store": "^0.7.0",
     "seneca-user": "thekemkid/seneca-user.git",
     "slug": "^0.9.1"
