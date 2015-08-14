@@ -22,3 +22,14 @@ All the language translation files are stored in the ````web\locale```` folder i
 ## Switching Languages
 
 The platform makes use of the ````Accept-Language```` header to determine which messages.po file to use. This can be changed by modifying the language settings in the browser. The language initial language setting can be overriden by selecting the desired language from the drop down in the navigation bar and it will be saved for subsequent visits.
+
+## Crowdin
+
+We use [CrowdIn](https://crowdin.com/) to help manage localizations.
+
+Three services currently have localisable material: cp-zen-platform, cp-dojos-service & cp-users-service. When these services are being built, jenkins syncs with CrowdIn via the crowdin command line tool:
+
+    crowdin-cli upload sources # uploads any changes to Crowdin (if there are any)
+    crowdin-cli download -l it # download any changes for Italian from Crowdin (if there are any)
+
+The translations are then included in the build and get deployed as part of the build artifact (no translations are kept in github).
