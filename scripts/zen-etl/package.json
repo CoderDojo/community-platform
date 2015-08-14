@@ -1,25 +1,21 @@
 {
   "name": "zen-etl",
   "version": "0.0.1",
-  "description": "Usage: node zen.etl.js mysql://<user>@<host>/<mydb>",
+  "description": "A migration worker for the old zen db",
   "main": "zen.etl.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "dependencies": {
-    "async": "~0.9.0",
-    "config": "~1.12.0",
-    "js-yaml": "~3.2.7",
-    "lodash": "~3.5.0",
-    "mysql": "~2.5.5",
-    "node-uuid": "~1.4.3",
-    "pg": "~4.3.0",
-    "request": "^2.55.0",
-    "seneca": "0.6.1",
-    "seneca-mongo-store": "0.2.0",
-    "seneca-postgresql-store": "git://github.com/iantocristian/seneca-postgresql-store.git",
-    "seneca-user": "git://github.com/rjrodger/seneca-user.git",
-    "underscore": "~1.8.2"
+    "async": "^1.4.0",
+    "lodash": "^3.10.1",
+    "mysql": "^2.8.0",
+    "node-geocoder": "^2.22.0",
+    "node-uuid": "^1.4.3",
+    "seneca": "0.6.4",
+    "seneca-postgresql-store": "^0.7.0",
+    "seneca-user": "thekemkid/seneca-user.git",
+    "slug": "^0.9.1"
   }
 }
