@@ -23,45 +23,12 @@ seneca.use('postgresql-store', config["postgresql-store"]);
 
 seneca
   .use('user')
-  .client({port:10303, pin:'role:cd-profiles,cmd:*'});
+  .client({port:10303, pin:'role:cd-profiles,cmd:*', type:'tcp'});
 
-seneca.add({ role: role, cmd: 'insert' }, function (args, done) {
+seneca.ready(function (args, done) {
   var userpin = seneca.pin({ role: 'user', cmd: '*'});
 
-  var registerusers = function (done) {
-    async.eachSeries(usersData, function(user, cb){
-      user = _.omit(user, [ 'password', 'new_password_key', 
-                            'new_password_requested','new_email', 
-                            'new_email_key', 'last_ip', 
-                            'last_login', 'created']);
-
-      user.id$ = user.id;
-      
-      if(user.init_user_type && user.init_user_type.name == "champion"){
-        userpin.register(user, function(err, res){
-          if (err) return done(err);
-
-          var profileData = {
-            userId:   user.id,
-            name:     user.name,
-            email:    user.email,
-            userType: user.init_user_type.name
-          };
-          seneca.act({role:'cd-profiles', cmd:'save', profile: profileData, timeout: false}, cb);
-        });
-      } else {
-        cb(null);
-      }
-    }, done);
-  };
-
-  async.series([
-    registerusers
-  ], done);
-});
-
-seneca.ready(function() {
-  seneca.act({ role: role, cmd: 'insert', timeout: false }, function (err) {
+  async.eachSeries(usersData, registerUser, function (err) {
     if (err) {
       console.log('insert user-data failed:', err);
     }
@@ -71,5 +38,31 @@ seneca.ready(function() {
 
     seneca.close(process.exit);
   });
+
+  var registerUser = function (user, done) {
+    user = _.omit(user, [ 'password', 'new_password_key', 
+                          'new_password_requested','new_email', 
+                          'new_email_key', 'last_ip', 
+                          'last_login', 'created']);
+
+    user.id$ = user.id;
+    
+    //only register the champions!
+    if(user.init_user_type && user.init_user_type.name == "champion"){
+      userpin.register(user, function(err, res){
+        if (err) return done(err);
+
+        var profileData = {
+          userId:   user.id,
+          name:     user.name,
+          email:    user.email,
+          userType: user.init_user_type.name
+        };
+        seneca.act({role:'cd-profiles', cmd:'save', profile: profileData, timeout: false}, cb);
+      });
+    } else {
+      cb(null);
+    }
+  };
 });
 

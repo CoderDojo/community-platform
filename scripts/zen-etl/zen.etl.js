@@ -204,24 +204,7 @@ async.parallel(queries, function(err, results) {
     return user;
   });
 
-  async.eachSeries(newDojos, function iterator(dojo, cb){
-    if(!dojo.coordinates) return async.setImmediate(function(){cb(null, dojo)});
-
-    geocoder.reverse({lat:dojo.coordinates.split(',')[0], lon:dojo.coordinates.split(',')[1]}, function(err, res) {
-      res = res[0];
-      
-      if(!res) return async.setImmediate(function(){cb(null, dojo)});
-
-      console.log(res);
-      dojo.address1 = (res.streetNumber || '') + ' ' + (res.streetName || '');
-      dojo.place = {'name': res.city};
-      dojo.state = {"toponymName": res.state};
-      dojo.country = {"countryName": res.country, "alpha2": res.countryCode};
-      dojo.admin1_code = res.stateCode;
-      dojo.admin1_name = res.state;
-      async.setImmediate(function(){cb(null, dojo)});
-    });
-  }, writeFiles)
+  writeFiles();
 
   function writeFiles(){
     //fs.writeFileSync("./data/countries.json", JSON.stringify(results.countries));

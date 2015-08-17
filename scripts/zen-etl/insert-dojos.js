@@ -25,11 +25,21 @@ seneca.use('postgresql-store', config["postgresql-store"]);
 
 seneca
   .use('user')
-  .client({port:10301, pin:'role:cd-dojos,cmd:*'})
-  .client({port:10303, pin:'role:cd-profiles,cmd:*'});
+  .client({port:10301, pin:'role:cd-dojos,cmd:*', type:'tcp'});
 
-seneca.add({ role: role, cmd: 'insert' }, function (args, done) {
+seneca.ready(function() {
+  async.eachSeries(dojosData, createDojo, function (err) {
+    if (err) {
+      console.log('insert dojo-data failed:', err);
+    }
+    else {
+      console.log('dojo-data inserted successfully');
+    }
 
+    seneca.close(process.exit);
+  });
+
+  var count = 0;
   function createDojo(dojo, cb) {
     var creatorUserObj = _.findWhere(usersData, {id: dojo.creator});
 
@@ -44,8 +54,11 @@ seneca.add({ role: role, cmd: 'insert' }, function (args, done) {
     delete dojo.id; 
 
     dojo = _.omit(dojo, ['country', 'location', 'url_slug'])
+    console.log('creating dojo', dojo, '** user', creatorUserObj, '**count', count++);
 
     seneca.act({role: 'cd-dojos', cmd: 'create', dojo: dojo, user: creatorUserObj, timeout: 65000}, function(err, res){
+      console.log('created dojo', dojo.name, err);
+      
       if(err) return cb(err);
       if(dojo.verified > 0){
         var verifiedState = res.data$();
@@ -68,26 +81,5 @@ seneca.add({ role: role, cmd: 'insert' }, function (args, done) {
       seneca.act({role: 'cd-dojos', cmd: 'save_dojo_lead', dojoLead: dojoLead}, cb);
     }
   }
-
-  var loadDojos = function (done) {
-    async.eachSeries(dojosData, createDojo, done);
-  };
-
-  async.series([
-    loadDojos
-  ], done);
-});
-
-seneca.ready(function() {
-  seneca.act({ role: role, cmd: 'insert', timeout: false }, function (err) {
-    if (err) {
-      console.log('insert dojo-data failed:', err);
-    }
-    else {
-      console.log('dojo-data inserted successfully');
-    }
-
-    seneca.close(process.exit);
-  });
 });
 
