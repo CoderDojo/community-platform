@@ -12,14 +12,7 @@ var config = {
       port: process.env.POSTGRES_PORT || 5432,
       username: process.env.POSTGRES_USERNAME || 'platform',
       password: process.env.POSTGRES_PASSWORD || 'QdYx3D5y'
-  }/*,
-  'salesforce-store': {
-      host: process.env.DOJOS_DB_NAME || 'https://test.salesforce.com',
-      accrectypeid: process.env.DOJOS_DB_NAME || '0121100000051tU',
-      leadrectypeid: process.env.DOJOS_DB_NAME || '0121100000050zq'
-      username: process.env.DOJOS_DB_NAME || 'damian.beresford@nearform.com',
-      password: process.env.DOJOS_DB_NAME || 'Password1234LWccYitGj6losAJLnKdSSGTyL'
-  }*/
+  }
 }
 
 var seneca = require('seneca')({timeout: 650000});
