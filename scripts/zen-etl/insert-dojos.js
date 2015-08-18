@@ -78,6 +78,7 @@ seneca.ready(function() {
       dojoLead.currentStep = (notVerified ? 4 : 5);
       dojoLead.application = {};
       dojoLead.completed = true;
+      if((dojo.verified == 1) || (dojo.verified != 1 && dojo.verified_by != null)) dojoLead.converted = true;
       seneca.act({role: 'cd-dojos', cmd: 'save_dojo_lead', dojoLead: dojoLead}, cb);
     }
   }
