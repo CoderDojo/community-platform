@@ -59,7 +59,6 @@ seneca.ready(function() {
     //seneca.close(process.exit);
   });
 
-  var count = 0;
   function createDojo(dojo, cb) {
     var counter = iter++;
     var creatorUserObj = _.findWhere(usersData, {id: dojo.creator});
