@@ -12,11 +12,11 @@ var today = new Date();
 var datetag = (today.getFullYear()).toString()+(today.getMonth()+1)+(today.getDate())+(today.getHours())+((today.getMinutes()<10)?"0"+today.getMinutes():today.getMinutes());
 var sflogfile= "./salesforce-users-migration-logfile."+datetag+".txt";
 fs.exists(sflogfile, function (exists) {
-  if(!exists) fs.writeFile(sflogfile);
+  if(!exists) fs.closeSync(fs.openSync(sflogfile, 'w'));
 });
 
-logOutput("--- starting user migration(" + new Date() + ") ---\n", sflogfile);
 var accRecType= process.env.SALESFORCE_ACC_RECORDTYPEID;
+var iter = 1;
 
 var config = {
   'postgresql-store': {
@@ -57,13 +57,13 @@ seneca.ready(function (args, done) {
     else {
       console.log('user-data inserted successfully');
     }
-
-    //seneca.close(process.exit);
+  //  seneca.close(process.exit);
   });
 
 });
 
 function registerUser(user, cb) {
+  var counter = iter++;
   user = _.omit(user, [ 'password', 'new_password_key', 
                         'new_password_requested','new_email', 
                         'new_email_key', 'last_ip', 
@@ -94,26 +94,26 @@ function registerUser(user, cb) {
           RecordTypeId: accRecType,
           UserType__c: (user.init_user_type) ? user.init_user_type.title : ""
         };
-        updateSalesForce(account, function(message) { logOutput(message, sflogfile); });
-        return cb();
+        updateSalesForce(account, function(message) { logOutput("("+counter+"/"+usersData.length+"): "+message, sflogfile); });
+        setImmediate(cb);
       });
     });
   } else {
-    cb(null);
+    setImmediate(cb);
   }
 };
 
-
 function updateSalesForce(account, cb) {
   seneca.act('role:cd-salesforce,cmd:save_account', {userId: account.PlatformId__c, account: account}, function (err, res){
-      if(err) return err;
-      if(!res) return cb(account.PlatformId__c+": error saving account");
+      if(err) return cb(err);
+      if(!res) return cb(account.PlatformId__c+": error saving salesforce account");
 
-      return cb(account.PlatformId__c+": account sucessfully saved");
+      return cb(account.PlatformId__c+": salesforce account sucessfully saved");
     });
 };
 
 function logOutput(message, filename) {
+  console.log(message);
   fs.appendFile(filename, message+"\n", function(err) {
     if(err) return console.log(err);
   }); 

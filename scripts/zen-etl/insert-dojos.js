@@ -14,11 +14,11 @@ var today = new Date();
 var datetag = (today.getFullYear()).toString()+(today.getMonth()+1)+(today.getDate())+(today.getHours())+((today.getMinutes()<10)?"0"+today.getMinutes():today.getMinutes());
 var sflogfile= "./salesforce-dojos-migration-logfile."+datetag+".txt";
 fs.exists(sflogfile, function (exists) {
-  if(!exists) fs.writeFile(sflogfile);
+  if(!exists) fs.closeSync(fs.openSync(sflogfile, 'w'));
 });
 
-logOutput("--- starting dojo migration(" + new Date() + ") ===\n",sflogfile)
 var leadRecType= process.env.SALESFORCE_LEAD_RECORDTYPEID;
+var iter = 1;
 
 var config = {
   salesforce: {
@@ -56,12 +56,12 @@ seneca.ready(function() {
     else {
       console.log('dojo-data inserted successfully');
     }
-
     //seneca.close(process.exit);
   });
 
   var count = 0;
   function createDojo(dojo, cb) {
+    var counter = iter++;
     var creatorUserObj = _.findWhere(usersData, {id: dojo.creator});
 
     if (!creatorUserObj){
@@ -137,11 +137,12 @@ seneca.ready(function() {
               Status: '5. Dojo Listing Created'
             }
           };
-          updateSalesForce(leadObj, function(message) { logOutput(message, sflogfile); });
-          return cb();
+          updateSalesForce(leadObj, function(message) { logOutput("("+counter+"/"+dojosData.length+"): "+message, sflogfile); });
+          //updateSalesForce(account, function(message) { logOutput("("+counter+"/"+usersData.length+"): "+message, sflogfile); });
+          setImmediate(cb);
         } else {
-          logOutput(leadObj.dojoLeadId + ": not created - no creator", sflogfile);
-          return cb();
+          logOutput(leadObj.dojoLeadId + ": error creating salesforce lead - no associated creator", sflogfile);
+          setImmediate(cb);
         }
       });
     }
@@ -151,25 +152,25 @@ seneca.ready(function() {
 function updateSalesForce(leadObj, cb) {
       
   seneca.act('role:cd-salesforce,cmd:get_account', {accId: leadObj.creator}, function (err, res){
-    if(err) return err;
-    if(!res.accId) return cb(leadObj.dojoLeadId+": error retrieving champion account");
+    if(err) return cb(err);
+    if(!res.accId) return cb(leadObj.dojoLeadId+": error retrieving salesforce champion account");
 
     leadObj.lead.ChampionAccount__c= res.accId;
     seneca.act('role:cd-salesforce,cmd:save_lead', {userId: leadObj.lead.PlatformId__c, lead: leadObj.lead}, function (err, res){
-      if(err) return err;
-      if(!res) return cb(leadObj.dojoLeadId+": error saving lead");
+      if(err) return cb(err);
+      if(!res) return cb(leadObj.dojoLeadId+": error saving salesforce lead");
 
       if((leadObj.verified == 1 ) || (leadObj.verified != 1 && leadObj.verified_by != null)) {
         seneca.act('role:cd-salesforce,cmd:convert_lead_to_account', {leadId: res.id$}, function (err, res){
-          if(err) return err;
-          if(!res) return cb(leadObj.dojoLeadId+": error converting lead to account"); 
+          if(err) return cb(err);
+          if(!res) return cb(leadObj.dojoLeadId+": error converting salesforce lead to account"); 
 
           if(leadObj.verified != 1) {
             var account= { Verified__c: 0 }
 
             seneca.act('role:cd-salesforce,cmd:save_account', {userId: leadObj.dojoLeadId, account: account}, function (err, res){
-              if(err) return err;
-              if(!res) return cb(leadObj.dojoLeadId+": error saving newly converted account");
+              if(err) return cb(err);
+              if(!res) return cb(leadObj.dojoLeadId+": error saving newly converted salesforce account");
 
               return cb(leadObj.dojoLeadId+": created salesforce lead and converted to account and updated converted account");
             });
@@ -185,6 +186,7 @@ function updateSalesForce(leadObj, cb) {
 } 
 
 function logOutput(message, filename) {
+  console.log(message);
   fs.appendFile(filename, message+"\n", function(err) {
     if(err) return console.log(err);
   }); 
