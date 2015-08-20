@@ -82,14 +82,14 @@ seneca.ready(function() {
     seneca.act({role: 'cd-dojos', cmd: 'create', dojo: dojo, user: creatorUserObj, timeout: 65000}, function(err, res){
       console.log('created dojo', dojo.name, err);
       
-      if(err) return cb(err);
+      if(err) return cb(null);
       if(dojo.verified > 0){
         var verifiedState = res.data$();
 
         verifiedState.verified = 1;
         res.save$(verifiedState, createDojoLead);
       } else{
-        createDojoLead(err, res, true);
+        createDojoLead(null, res, true);
       }
     });
 
@@ -103,7 +103,7 @@ seneca.ready(function() {
       dojoLead.completed = true;
       if((dojo.verified == 1) || (dojo.verified != 1 && dojo.verified_by != null)) dojoLead.converted = true;
       seneca.act({role: 'cd-dojos', cmd: 'save_dojo_lead', dojoLead: dojoLead}, function(err, res) {        
-        if(err) return cb(err);
+        if(err) return cb(null);
         if(!res.id) return cb(res);
 
         if(dojo.creator) {

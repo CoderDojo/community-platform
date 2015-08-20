@@ -75,7 +75,7 @@ function registerUser(user, cb) {
   //only register the champions!
   if(user.init_user_type && user.init_user_type.name == "champion"){
     userpin.register(user, function(err, res){
-      if (err) return cb(err);
+      if (err) return cb(null);
 
       var profileData = {
         userId:   user.id,
@@ -84,7 +84,7 @@ function registerUser(user, cb) {
         userType: user.init_user_type.name
       };
       seneca.act({role:'cd-profiles', cmd:'save', profile: profileData, timeout: false}, function(err, res) {
-        if(err) return cb(err);
+        if(err) return cb(null);
         if(!res) return cb(res);
 
         var account = {
