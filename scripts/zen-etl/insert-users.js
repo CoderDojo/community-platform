@@ -3,7 +3,8 @@ var _ = require('lodash');
 var fs= require('fs');
 var async = require('async');
 var envvars = require('./migration-vars.env');
-var usersData = require('./data/users.json');
+//var usersData = require('./data/users.json');
+var usersData = require('./data/salesforce-user.json');
 
 _.each(envvars, function(value, key) {
   process.env[key] = value;
@@ -92,7 +93,8 @@ function registerUser(user, cb) {
           Email__c: user.email || '<nobody@nowhere.com>',
           Name: user.name ||'<nobody>',
           RecordTypeId: accRecType,
-          UserType__c: (user.init_user_type) ? user.init_user_type.title : ""
+          UserType__c: (user.init_user_type) ? user.init_user_type.title : "",
+          Migrated__c: 1
         };
         updateSalesForce(account, function(message) { logOutput("("+counter+"/"+usersData.length+"): "+message, sflogfile); });
         setImmediate(cb);
