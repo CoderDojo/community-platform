@@ -4,8 +4,7 @@ var fs= require('fs');
 var async = require('async');
 var envvars = require('./migration-vars.env');
 var usersData = require('./data/users.json');
-//var dojosData = require('./data/dojos.json');
-var dojosData = require('./data/salesforce-dojo.json');
+var dojosData = require('./data/dojos.json');
 
 _.each(envvars, function(value, key) {
   process.env[key] = value;

@@ -3,8 +3,7 @@ var _ = require('lodash');
 var fs= require('fs');
 var async = require('async');
 var envvars = require('./migration-vars.env');
-//var usersData = require('./data/users.json');
-var usersData = require('./data/salesforce-user.json');
+var usersData = require('./data/users.json');
 
 _.each(envvars, function(value, key) {
   process.env[key] = value;
