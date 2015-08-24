@@ -100,10 +100,12 @@ seneca.ready(function() {
       dojoLead.currentStep = (notVerified ? 4 : 5);
       dojoLead.application = {};
       dojoLead.completed = true;
+      dojoLead.migration = dojo.mysql_dojo_id;
+
       if((dojo.verified == 1) || (dojo.verified != 1 && dojo.verified_by != null)) dojoLead.converted = true;
       seneca.act({role: 'cd-dojos', cmd: 'save_dojo_lead', dojoLead: dojoLead}, function(err, res) {        
         if(err) return cb(null);
-        if(!res.id) return cb(res);
+        if(!res.id) return cb(null);
 
         if(dojo.creator) {
           var leadObj= {
@@ -133,6 +135,7 @@ seneca.ready(function() {
               GoogleGroupURL__c: dojo.google_group || null,
               Website: dojo.website || null,
               Twitter__c: dojo.twitter || null,
+              SupportersImageURL__c: dojo.supporter_image || null,
               Language__c: 'en_US',
               Deleted__c: dojo.deleted || 0,
               Status: '5. Dojo Listing Created',
