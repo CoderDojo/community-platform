@@ -117,7 +117,7 @@ function registerUser(user, cb) {
 
 var runQ = async.queue(function (account, cb) {
   seneca.act('role:cd-salesforce,cmd:save_account', {userId: account.PlatformId__c, account: account}, function (err, res){
-      if(err) return cb(leadObj.PlatformId__c+": error saving salesforce account [ERROR]");
+      if(err) return cb(account.PlatformId__c+": error saving salesforce account [ERROR]");
       if(!res) return cb(account.PlatformId__c+": error saving salesforce account [ERROR]");
 
       return cb(account.PlatformId__c+": salesforce account sucessfully saved");
