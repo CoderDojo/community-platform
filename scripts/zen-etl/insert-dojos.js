@@ -119,7 +119,7 @@ seneca.ready(function() {
               RecordTypeId: leadRecType,
               Company: dojo.name || '<no name specified>',
               LastName: dojo.name || '<no name specified>',
-              Email: dojo.email || 'nobody@email.com',
+              Email: dojo.email || 'info@coderdojo.com',
               Phone: dojo.phone || '00000000',
               Time__c: dojo.time  || null,
               Country: (dojo.country) ? dojo.country.countryName : null,
