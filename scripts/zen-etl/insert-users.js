@@ -8,6 +8,7 @@ var usersData = require('./data/users.json');
 _.each(envvars, function(value, key) {
   process.env[key] = value;
 });
+
 var today = new Date();
 var datetag = (today.getFullYear()).toString()+(today.getMonth()+1)+(today.getDate())+(today.getHours())+((today.getMinutes()<10)?"0"+today.getMinutes():today.getMinutes());
 var sflogfile= "./salesforce-users-migration-logfile."+datetag+".txt";
@@ -73,8 +74,12 @@ function registerUser(user, cb) {
     
   //only register the champions!
   if(user.init_user_type && user.init_user_type.name == "champion"){
+    console.log('trying to register user:', user);
     userpin.register(user, function(err, res){
-      if (err) return cb(null);
+      if (err){ 
+        console.error('[ERROR] problem creating user:', user)
+        return setImmediate(cb);
+      }
 
       var profileData = {
         userId:   user.id,
@@ -83,8 +88,14 @@ function registerUser(user, cb) {
         userType: user.init_user_type.name
       };
       seneca.act({role:'cd-profiles', cmd:'save', profile: profileData, timeout: false}, function(err, res) {
-        if(err) return cb(null);
-        if(!res) return cb(res);
+        if(err){ 
+          console.error('[ERROR] problem creating profile:', profileData)
+          return setImmediate(cb); 
+        }
+        if(!res){ 
+          console.error('[ERROR] problem creating profile:', profileData)
+          return setImmediate(cb); 
+        }
 
         var account = {
           PlatformId__c: user.id,
@@ -104,13 +115,17 @@ function registerUser(user, cb) {
   }
 };
 
-function updateSalesForce(account, cb) {
+var runQ = async.queue(function (account, cb) {
   seneca.act('role:cd-salesforce,cmd:save_account', {userId: account.PlatformId__c, account: account}, function (err, res){
-      if(err) return cb(err);
-      if(!res) return cb(account.PlatformId__c+": error saving salesforce account");
+      if(err) return cb(leadObj.PlatformId__c+": error saving salesforce account [ERROR]");
+      if(!res) return cb(account.PlatformId__c+": error saving salesforce account [ERROR]");
 
       return cb(account.PlatformId__c+": salesforce account sucessfully saved");
     });
+}, 1);
+
+function updateSalesForce(account, cb) {
+  runQ.push(account, cb);
 };
 
 function logOutput(message, filename) {

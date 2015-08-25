@@ -138,8 +138,12 @@ async.parallel(queries, function(err, results) {
 
     dojo.id = uuid.v4();
 
+    dojo.coordinates = (validCoords(dojo.coordinates)) ? dojo.coordinates : null;
+
     return dojo; 
   });
+
+
 
   //console.log(results.usersDojos);
 
@@ -223,6 +227,15 @@ async.parallel(queries, function(err, results) {
   }
   
 });
+
+function validCoords(coords) {
+  if(!coords) return false; 
+  var arr = coords.split(',');
+  if(arr.length != 2) return false;
+  if(!Number(arr[0])) return false;
+  if(!Number(arr[1])) return false;
+  return true;
+}
 
 
 connection.end();
