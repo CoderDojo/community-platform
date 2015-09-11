@@ -1,6 +1,6 @@
 # Forums
 
-We use [NodeBB](https://nodebb.org/) for both the Adult and Child Forums. There are four main elements to this in the Community Platform:
+We use [NodeBB](https://nodebb.org/) for both the Mentor and Youth Forums. There are four main elements to this in the Community Platform:
 
 * the NodeBB installation itself, at the time of writing we are using version 0.7.
 * the CoderDojo SSO plugin for NodeBB, this is a plugin for NodeBB that allows a user of the Forum to log in using their Community Platform account. This plugin is located here: [github.com/CoderDojo/nodebb-plugin-sso-coderdojo](https://github.com/CoderDojo/nodebb-plugin-sso-coderdojo)
