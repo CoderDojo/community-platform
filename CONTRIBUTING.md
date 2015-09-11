@@ -7,7 +7,7 @@ please make sure discussions are related to concrete technical issues with the
 Zen software.
 
 Discussion of non-technical topics including subjects like intellectual
-property, trademark and high level project questions should move to the
+property, trademark and high level project questions ideally should move to the
 [Forums](https://forums.coderdojo.com) instead.
 
 ## Code Contributions
@@ -26,7 +26,7 @@ copy locally.
 
 #### Which branch?
 
-For developing new features and bug fixes, the `master` branch should be pulled
+For developing new features and bug fixes, the `master` branch needs to be pulled
 and built upon. Zen follows a [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integration)
 model, where the master branch is always deployed to production. 
 
@@ -48,10 +48,10 @@ $ git config --global user.name "J. Random User"
 $ git config --global user.email "j.random.user@example.com"
 ```
 
-Writing good commit logs is important.  A commit log should describe what
+Writing good commit logs is important.  A commit log needs to describe what
 changed and why.  Follow these guidelines when writing one:
 
-1. The first line should be 50 characters or less and contain a short
+1. The first line ideally should be 50 characters or less and contain a short
 description of the change 
 2. Keep the second line blank.
 3. Wrap all other lines at 72 columns.
@@ -71,7 +71,7 @@ please do proper word-wrap and keep columns shorter than about
 nicely even when it is indented.
 ```
 
-The header line should be meaningful; it is what other people see when they
+The header line needs to be meaningful; it is what other people see when they
 run `git shortlog` or `git log --oneline`.
 
 
@@ -87,9 +87,8 @@ $ git rebase upstream/master
 
 ### Step 5: Test
 
-Bug fixes and features **should come with tests**.  Add your tests in the
-test directory of each effected microservice. Look at other tests to see how they should be
-structured.
+Bug fixes and features **need to come with tests**.  Add your tests in the
+test directory of each effected microservice. Look at other tests to see how they are structured.
 
 ```text
 $ npm test
