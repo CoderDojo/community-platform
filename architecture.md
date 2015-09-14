@@ -15,7 +15,7 @@ These services live in the following code repositories:
 
 ## cp-zen-platform
 
-cp-zen-platform contains all the front end Angular JS code, as well as implementing the backend REST API server. The server is written using the [Hapi](hapijs.com) framework. The REST API calls are mostly proxy calls through to [Seneca](senecajs.org) microservices.
+cp-zen-platform contains all the front end [AngularJS](angularjs.org) code, as well as implementing the backend REST API server. The server is written using the [Hapi](hapijs.com) framework. The REST API calls are mostly proxy calls through to [Seneca](senecajs.org) microservices.
 
 ## cp-events-service
 
