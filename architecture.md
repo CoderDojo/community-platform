@@ -2,7 +2,7 @@
 
 Zen is primarily composed of a handful of microservices:
 
-![](services.png)
+![](services-2.png)
 
 These services live in the following code repositories:
 
