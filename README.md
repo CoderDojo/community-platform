@@ -44,7 +44,7 @@ Once you're familiar with the codebase, there are a number of labels/milestones 
 
 ## License
 
-The Community Platform (Zen) is copyright The CoderDojo Foundation, and open sourced under the MIT license.
+The Community Platform (Zen) is copyright The CoderDojo Foundation, and open sourced under the [MIT license](LICENSE.md).
 
 ## Documentation
 
