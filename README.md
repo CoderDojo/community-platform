@@ -20,6 +20,12 @@ There are a few labels in particular that are very useful if you are new to Zen:
 * The [request for comments](https://github.com/CoderDojo/community-platform/labels/request%20for%20comments) label is great for non-coders or people wishing to get familiar with the system. These are often features we are not sure if we want to produce yet, or issues that require clearer implementation guidelines.
 * The [hints provided](https://github.com/CoderDojo/community-platform/labels/hints%20provided) label is attached to anything which has been given a technical spec by someone on the development team.
 
+### Bug fixes
+
+* Ideally all of the [bugs](https://github.com/CoderDojo/community-platform/labels/bug) are the most improtant issues to fix. They are categorised by priority. 
+* Some bugs are smaller CSS issues that are marked low priority and so are not as important to work on. 
+
+
 ### Priorities for the project
 
 Once you're familiar with the codebase, there are a number of labels/milestones to guide you through our roadmap.
