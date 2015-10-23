@@ -23,6 +23,7 @@ There are a few labels in particular that are very useful if you are new to Zen:
 ### Bug fixes
 
 * Ideally all of the [bugs](https://github.com/CoderDojo/community-platform/labels/bug) are the most improtant issues to fix. They are categorised by priority. 
+* There is a [critical bugs milestone](https://github.com/CoderDojo/community-platform/milestones/Critical%20bugs) for the most important bugs.
 * Some bugs are smaller CSS issues that are marked low priority and so are not as important to work on. 
 
 
