@@ -7,7 +7,7 @@ Welcome to 'Zen'! You can see the live site at [zen.coderdojo.com](https://zen.c
 There are various ways to contribute to Zen:
 
 * as a developer, instructions for creating a local development environment can be found in the ['local dev'](https://github.com/CoderDojo/cp-local-development) repository. You may also wish to read the [contributing](CONTRIBUTING.md) guide.
-* as a translator, we use [CrowdIn](https://crowdin.com/project/zen-community-platform) to help manage localistaion, please sign up and help out!
+* as a translator, we use [CrowdIn](https://crowdin.com/project/zen-community-platform) to help manage localisation, please sign up and help out!
 * issue management, we keep track of all our issues in GitHub in this repo, help out [here](https://github.com/CoderDojo/community-platform/issues)
 * documentation, by contributing to the documentation in this repository.
 
@@ -22,7 +22,7 @@ There are a few labels in particular that are very useful if you are new to Zen:
 
 ### Bug fixes
 
-* Ideally all of the [bugs](https://github.com/CoderDojo/community-platform/labels/bug) are the most improtant issues to fix. They are categorised by priority. 
+* Ideally all of the [bugs](https://github.com/CoderDojo/community-platform/labels/bug) are the most important issues to fix. They are categorised by priority. 
 * There is a [critical bugs milestone](https://github.com/CoderDojo/community-platform/milestones/Critical%20bugs) for the most important bugs.
 * Some bugs are smaller CSS issues that are marked low priority and so are not as important to work on. 
 
