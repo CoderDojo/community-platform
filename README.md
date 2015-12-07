@@ -13,8 +13,8 @@ It includes:
 - Ability to search for a Dojo (coding club) and join the club
 - A bespoke ticketing system where parents and mentors can book tickets for their local club
 - Profile pages for parents, mentors and youths
-- Two forums (Over 13 and community forum), running on [NodeBB](https://nodebb.org/)
-- [Mozilla Open Badges] integration(http://openbadges.org/)
+- Two forums (Over 13 and community forum), running on [NodeBB](https://nodebb.org/).
+- [Mozilla Open Badges](http://openbadges.org/) integration.
 
 Most of the technology we use is open source, and we are proud of it! For CoderDojo related questions, contact info@coderdojo.org.
 Get in touch with ursula@coderdojo.org with any technical questions.
