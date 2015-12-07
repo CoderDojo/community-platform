@@ -4,9 +4,9 @@ Welcome to 'Zen'! You can see the live site at [zen.coderdojo.com](https://zen.c
 
 # About the project
 
-CoderDojo is a network of free computer programming clubs for youths aged 7-17. It is a global charity and we currently have over 860 clubs in over 60 countries!
+[CoderDojo](coderdojo.com) is a network of free computer programming clubs for youths aged 7-17. It is a global charity and we currently have over 860 clubs in over 60 countries!
 
-Zen was originally set up to track new "Dojos" (coding clubs) and help the CoderDojo Foundation track new clubs being set up worldwide.
+Zen was originally set up to track new "Dojos" (coding clubs) and help the [CoderDojo Foundation](https://coderdojo.com/about/coderdojo-foundation/) track new clubs being set up worldwide.
 In 2015, it was redeveloped to be a fully fledged community platform. 
 
 It includes:
