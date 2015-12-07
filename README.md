@@ -2,6 +2,23 @@
 
 Welcome to 'Zen'! You can see the live site at [zen.coderdojo.com](https://zen.coderdojo.com).
 
+# About the project
+
+CoderDojo is a network of free computer programming clubs for youths aged 7-17. It is a global charity and we currently have over 860 clubs in over 60 countries!
+
+Zen was originally set up to track new "Dojos" (coding clubs) and help the CoderDojo Foundation track new clubs being set up worldwide.
+In 2015, it was redeveloped to be a fully fledged community platform. 
+
+It includes:
+- Ability to search for a Dojo (coding club) and join the club
+- A bespoke ticketing system where parents and mentors can book tickets for their local club
+- Profile pages for parents, mentors and youths
+- Two forums (Over 13 and community forum), running on [NodeBB](https://nodebb.org/)
+- [Mozilla Open Badges] integration(http://openbadges.org/)
+
+Most of the technology we use is open source, and we are proud of it! For CoderDojo related questions, contact info@coderdojo.org.
+Get in touch with ursula@coderdojo.org with any technical questions.
+
 ## Contributing to Zen
 
 There are various ways to contribute to Zen:
@@ -39,7 +56,7 @@ Once you're familiar with the codebase, there are a number of labels/milestones 
 
 - Comment on it and let us know so we don't duplicate any effort.
 - We can add you to the official CoderDojo development team so you can assign yourself issues. 
-- Tag [@tangentfairy](https://github.com/tangentfairy) if you have any questions
+- Tag [@tangentfairy](https://github.com/tangentfairy) if you have any questions.
 
 ## Developer Support
 
