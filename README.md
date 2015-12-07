@@ -7,7 +7,7 @@ Welcome to 'Zen'! You can see the live site at [zen.coderdojo.com](https://zen.c
 [CoderDojo](coderdojo.com) is a network of free computer programming clubs for youths aged 7-17. It is a global charity and we currently have over 860 clubs in over 60 countries!
 
 Zen was originally set up to track new "Dojos" (coding clubs) and help the [CoderDojo Foundation](https://coderdojo.com/about/coderdojo-foundation/) track new clubs being set up worldwide.
-In 2015, it was redeveloped to be a fully fledged community platform. 
+In 2015, it was redeveloped to be a fully fledged community platform. It is built entirely in javascript using [NodeJS](https://nodejs.org/) and [AngularJS](https://angularjs.org/).
 
 It includes:
 - Ability to search for a Dojo (coding club) and join the club
@@ -23,9 +23,9 @@ Get in touch with ursula@coderdojo.org with any technical questions.
 
 There are various ways to contribute to Zen:
 
-* as a developer, instructions for creating a local development environment can be found in the ['local dev'](https://github.com/CoderDojo/cp-local-development) repository. You may also wish to read the [contributing](CONTRIBUTING.md) guide.
+* as a developer, instructions for creating a local development environment can be found in the [cp-local dev-development](https://github.com/CoderDojo/cp-local-development) repository. You may also wish to read the [contributing](CONTRIBUTING.md) guide.
 * as a translator, we use [CrowdIn](https://crowdin.com/project/zen-community-platform) to help manage localisation, please sign up and help out!
-* issue management, we keep track of all our issues in GitHub in this repo, help out [here](https://github.com/CoderDojo/community-platform/issues)
+* issue management, we keep track of all our issues in GitHub in this repo, [help out here](https://github.com/CoderDojo/community-platform/issues)
 * documentation, by contributing to the documentation in this repository.
 
 ## Where to begin
@@ -43,7 +43,6 @@ There are a few labels in particular that are very useful if you are new to Zen:
 * There is a [critical bugs milestone](https://github.com/CoderDojo/community-platform/milestones/Critical%20bugs) for the most important bugs.
 * Some bugs are smaller CSS issues that are marked low priority and so are not as important to work on. 
 
-
 ### Priorities for the project
 
 Once you're familiar with the codebase, there are a number of labels/milestones to guide you through our roadmap.
@@ -51,6 +50,8 @@ Once you're familiar with the codebase, there are a number of labels/milestones 
 - For immediate issues, there is a section for [Q4 2015](https://github.com/CoderDojo/community-platform/milestones/2015%20Q4%20issues%20to%20complete)
 - Issues are sorted by other priority levels, [low](https://github.com/CoderDojo/community-platform/labels/low%20priority), [normal](https://github.com/CoderDojo/community-platform/labels/normal%20priority) and [high](https://github.com/CoderDojo/community-platform/labels/high%20priority)
 - We also have a [short term roadmap](https://github.com/CoderDojo/community-platform/milestones/Short%20term%20roadmap) and [long term roadmap](https://github.com/CoderDojo/community-platform/milestones/Long%20term%20roadmap)
+
+Still not sure? Get in touch, let us know what you are interested in working on and we're happy to provide guidance.
 
 #### Working on an issue?
 
