@@ -33,7 +33,7 @@ There are various ways to contribute to Zen:
 View our [Speaker Deck](https://speakerdeck.com/helloworldfoundation/contributing-to-zen-the-coderdojo-open-source-community-platform)!
 
 There are a few labels in particular that are very useful if you are new to Zen:
-* The [suitable for beginners](https://github.com/CoderDojo/community-platform/labels/suitable%20for%20beginners) label marks anything considered easy enough for a first time contributor. 
+* The [beginner](https://github.com/CoderDojo/community-platform/labels/beginner) label marks anything considered easy enough for a first time contributor. 
 * The [request for comments](https://github.com/CoderDojo/community-platform/labels/request%20for%20comments) label is great for non-coders or people wishing to get familiar with the system. These are often features we are not sure if we want to produce yet, or issues that require clearer implementation guidelines.
 * The [hints provided](https://github.com/CoderDojo/community-platform/labels/hints%20provided) label is attached to anything which has been given a technical spec by someone on the development team.
 
