@@ -2,6 +2,8 @@
 
 Welcome to 'Zen'! You can see the live site at [zen.coderdojo.com](https://zen.coderdojo.com).
 
+This repository is the documentation for the project. There are also [three microservice respositories and a frontend repository](https://github.com/CoderDojo/community-platform/blob/master/architecture.md).
+
 # About the project
 
 [CoderDojo](coderdojo.com) is a network of free computer programming clubs for youths aged 7-17. It is a global charity and we currently have over 860 clubs in over 60 countries!
