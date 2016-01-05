@@ -1,8 +1,12 @@
 # Zen, the CoderDojo Community Platform
 
-Welcome to 'Zen'! You can see the live site at [zen.coderdojo.com](https://zen.coderdojo.com).
+Welcome to "Zen"! You can see the live site at [zen.coderdojo.com](https://zen.coderdojo.com).
 
-This repository is the documentation for the project. There are also [three microservice respositories and a frontend repository](https://github.com/CoderDojo/community-platform/blob/master/architecture.md).
+This repository is the documentation for the project. [We log issues in this repository](https://github.com/CoderDojo/community-platform/issues).
+
+There are also [three microservice respositories and a frontend repository](https://github.com/CoderDojo/community-platform/blob/master/architecture.md).
+
+If you want to jump straight in to getting your development environment set up, [visit the development environment repository here](https://github.com/CoderDojo/cp-local-development).
 
 # About the project
 
