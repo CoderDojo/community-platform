@@ -30,6 +30,8 @@ For developing new features and bug fixes, the `master` branch needs to be pulle
 and built upon. Zen follows a [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integration)
 model, where the master branch is always deployed to production. 
 
+Please follow [instructions on the development repository](https://github.com/CoderDojo/cp-local-development) to get your development environment set up.
+
 
 ### Step 2: Branch
 
