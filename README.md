@@ -29,7 +29,7 @@ Get in touch with ursula@coderdojo.org with any technical questions.
 
 There are various ways to contribute to Zen:
 
-* as a developer, instructions for creating a local development environment can be found in the [cp-local dev-development](https://github.com/CoderDojo/cp-local-development) repository. You may also wish to read the [contributing](CONTRIBUTING.md) guide.
+* as a developer, instructions for creating a local development environment can be found in the [cp-local-development](https://github.com/CoderDojo/cp-local-development) repository. You may also wish to read the [contributing](CONTRIBUTING.md) guide.
 * as a translator, we use [CrowdIn](https://crowdin.com/project/zen-community-platform) to help manage localisation, please sign up and help out!
 * issue management, we keep track of all our issues in GitHub in this repo, [help out here](https://github.com/CoderDojo/community-platform/issues)
 * documentation, by contributing to the documentation in this repository.
