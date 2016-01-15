@@ -53,7 +53,7 @@ There are a few labels in particular that are very useful if you are new to Zen:
 
 Once you're familiar with the codebase, there are a number of labels/milestones to guide you through our roadmap.
 - Our [top priority](https://github.com/CoderDojo/community-platform/labels/top%20priority) label is for features which are the most important
-- For immediate issues, there is a section for [Q4 2015](https://github.com/CoderDojo/community-platform/milestones/2015%20Q4%20issues%20to%20complete)
+- For immediate issues, there is a section for [Q1 2016](https://github.com/CoderDojo/community-platform/milestones/2016%20Q1)
 - Issues are sorted by other priority levels, [low](https://github.com/CoderDojo/community-platform/labels/low%20priority), [normal](https://github.com/CoderDojo/community-platform/labels/normal%20priority) and [high](https://github.com/CoderDojo/community-platform/labels/high%20priority)
 - We also have a [short term roadmap](https://github.com/CoderDojo/community-platform/milestones/Short%20term%20roadmap) and [long term roadmap](https://github.com/CoderDojo/community-platform/milestones/Long%20term%20roadmap)
 
