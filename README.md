@@ -1,5 +1,7 @@
 # Zen, the CoderDojo Community Platform
 
+[![Join the chat at https://gitter.im/CoderDojo/community-platform](https://badges.gitter.im/CoderDojo/community-platform.svg)](https://gitter.im/CoderDojo/community-platform?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Welcome to "Zen"! You can see the live site at [zen.coderdojo.com](https://zen.coderdojo.com).
 
 This repository is the documentation for the project. [We log issues in this repository](https://github.com/CoderDojo/community-platform/issues).
