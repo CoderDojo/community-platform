@@ -70,7 +70,7 @@ Still not sure? Get in touch, let us know what you are interested in working on 
 ## Developer Support
 
 * The CoderDojo Foundation Technical Lead is available to help you get set up.
-* We have [a gitter channel here](https://gitter.im/CoderDojo?utm_source=share-link&utm_medium=link&utm_campaign=share-link) if you have any questions.
+* Join the [gitter chat](https://gitter.im/CoderDojo/community-platform) if you have any questions.
 * Those who have commited to the project can be added to the Foundation Slack community for daily communications. Please get in touch to be added! 
 * To get in touch, email us at info@coderdojo.org
 * To deploy a change, you'll need to get in touch as only those with commit access can do so. 
