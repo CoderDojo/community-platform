@@ -44,6 +44,7 @@ There are a few labels in particular that are very useful if you are new to Zen:
 * The [beginner](https://github.com/CoderDojo/community-platform/labels/beginner) label marks anything considered easy enough for a first time contributor. 
 * The [request for comments](https://github.com/CoderDojo/community-platform/labels/request%20for%20comments) label is great for non-coders or people wishing to get familiar with the system. These are often features we are not sure if we want to produce yet, or issues that require clearer implementation guidelines.
 * The [hints provided](https://github.com/CoderDojo/community-platform/labels/hints%20provided) label is attached to anything which has been given a technical spec by someone on the development team.
+* [View this document for a brief overview](https://github.com/CoderDojo/community-platform/blob/master/creating-test-data.md) of the sections of the system and how to access them with the test account.
 
 ### Bug fixes
 
@@ -65,6 +66,7 @@ Still not sure? Get in touch, let us know what you are interested in working on 
 
 - Comment on it and let us know so we don't duplicate any effort.
 - We can add you to the official CoderDojo development team so you can assign yourself issues. 
+- Please add unit tests where possible to your code. There is an [end to end test repository](https://github.com/CoderDojo/cp-e2e-tests) for front end testing. There is also a tests directory in the root directory of each service and in the [front end repository](https://github.com/CoderDojo/cp-zen-platform/tree/master/test).
 - Tag [@tangentfairy](https://github.com/tangentfairy) if you have any questions.
 
 ## Developer Support
