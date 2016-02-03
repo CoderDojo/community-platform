@@ -6,7 +6,7 @@ Welcome to "Zen"! You can see the live site at [zen.coderdojo.com](https://zen.c
 
 This repository is the documentation for the project. [We log issues in this repository](https://github.com/CoderDojo/community-platform/issues).
 
-There are also [three microservice respositories and a frontend repository](https://github.com/CoderDojo/community-platform/blob/master/architecture.md).
+There are also [three microservice repositories and a frontend repository](https://github.com/CoderDojo/community-platform/blob/master/architecture.md).
 
 If you want to jump straight in to getting your development environment set up, [visit the development environment repository here](https://github.com/CoderDojo/cp-local-development).
 
@@ -73,7 +73,7 @@ Still not sure? Get in touch, let us know what you are interested in working on 
 
 * The CoderDojo Foundation Technical Lead is available to help you get set up.
 * Join the [gitter chat](https://gitter.im/CoderDojo/community-platform) if you have any questions.
-* Those who have commited to the project can be added to the Foundation Slack community for daily communications. Please get in touch to be added! 
+* Those who have committed to the project can be added to the Foundation Slack community for daily communications. Please get in touch to be added! 
 * To get in touch, email us at info@coderdojo.org
 * To deploy a change, you'll need to get in touch as only those with commit access can do so. 
 * Have a read through [closed pull requests](https://github.com/CoderDojo/cp-zen-platform/pulls?q=is%3Apr+is%3Aclosed) in the frontend repository to get a feel for what we have been working on.
