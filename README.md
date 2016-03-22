@@ -12,7 +12,7 @@ If you want to jump straight in to getting your development environment set up, 
 
 # About the project
 
-[CoderDojo](coderdojo.com) is a network of free computer programming clubs for youths aged 7-17. It is a global charity and we currently have over 860 clubs in over 60 countries!
+[CoderDojo](coderdojo.com) is a network of free computer programming clubs for youths aged 7-17. It is a global charity and we currently have more than 900 clubs in over 63 countries!
 
 Zen was originally set up to track new "Dojos" (coding clubs) and help the [CoderDojo Foundation](https://coderdojo.com/about/coderdojo-foundation/) track new clubs being set up worldwide.
 In 2015, it was redeveloped to be a fully fledged community platform. It is built entirely in javascript using [NodeJS](https://nodejs.org/) and [AngularJS](https://angularjs.org/).
@@ -25,7 +25,7 @@ It includes:
 - [Mozilla Open Badges](http://openbadges.org/) integration.
 
 Most of the technology we use is open source, and we are proud of it! For CoderDojo related questions, contact info@coderdojo.org.
-Get in touch with ursula@coderdojo.org with any technical questions.
+Get in touch with guillaume@coderdojo.org with any technical questions.
 
 ## Contributing to Zen
 
