@@ -1,10 +1,10 @@
 # Community Platform (Zen) Architecture
 
-Zen is primarily composed of a handful of microservices:
+Zen se compone principalmente de un puñado de microservicios:
 
 ![](services-2.png)
 
-These services live in the following code repositories:
+Estos servicios viven en los siguientes repositorios de código:
 
 * [cp-zen-platform](https://github.com/CoderDojo/cp-zen-platform)
 * [cp-events-service](https://github.com/CoderDojo/cp-events-service)
@@ -15,15 +15,15 @@ These services live in the following code repositories:
 
 ## cp-zen-platform
 
-cp-zen-platform contains all the front end [AngularJS](https://angularjs.org/) code, as well as implementing the backend REST API server. The server is written using the [Hapi](http://hapijs.com/) framework. The REST API calls are mostly proxy calls through to [Seneca](http://senecajs.org/) microservices.
+cp-zen-platform contiene todo el código de interface [AngularJS](https://angularjs.org/), así como también implementa los REST API del lado del servidor. El servidor está escrito utilizando el entorno [Hapi](http://hapijs.com/). Las llamadas al REST API son en su mayoría llamadas al proxy a través de microservicios [Seneca](http://senecajs.org/).
 
 ## cp-events-service
 
-The Events service implememts all the Events related functionality in Zen. The event data is stored in [PostgresSQL](http://www.postgresql.org/).
+El servicio de eventos implementa todos los eventos relacionados con la funcionalidad en el Zen. Los datos de eventos se almacena en [PostgresSQL](http://www.postgresql.org/).
 
 ## cp-badges-service
 
-The Badges service implements all the Badges related functionality in Zen. This service talks to a [BadgeKit](http://badgekit.openbadges.org) via the BadgeKit API, all Badge related data is stored in BadgeKit.
+El servicio Badges implementa todas las funcionalidades relacionadas con Badges de Zend. Este servicio le habla a un [BadgeKit](http://badgekit.openbadges.org) a través de los BadgeKit API, todos los datos relativos al Badge están almacenados en BadgeKit.
 
 ## cp-salesforce-service
 
