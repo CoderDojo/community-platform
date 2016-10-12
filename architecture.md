@@ -19,7 +19,7 @@ cp-zen-platform contains all the front end [AngularJS](https://angularjs.org/) c
 
 ## cp-events-service
 
-The Events service implememts all the Events related functionality in Zen. The event data is stored in [PostgresSQL](http://www.postgresql.org/).
+The Events service implements all the Events related functionality in Zen. The event data is stored in [PostgresSQL](http://www.postgresql.org/).
 
 ## cp-badges-service
 
@@ -31,11 +31,11 @@ The Salesforce service implements all the Salesforce related functionality in Ze
 
 ## cp-dojos-service
 
-The Dojos service implememts all the Dojos related functionality in Zen. All dojo related data is stored in [PostgresSQL](http://www.postgresql.org/).
+The Dojos service implements all the Dojos related functionality in Zen. All dojo related data is stored in [PostgresSQL](http://www.postgresql.org/).
 
 ## cp-users-service
 
-The Users service implememts all the User related functionality in Zen. All user data is stored in [PostgresSQL](http://www.postgresql.org/).
+The Users service implements all the User related functionality in Zen. All user data is stored in [PostgresSQL](http://www.postgresql.org/).
 
 ## External Services
 
