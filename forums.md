@@ -1,3 +1,5 @@
+[Español](forums-es.md)
+
 # Forums
 
 We use [NodeBB](https://nodebb.org/) for both the Mentor and Youth Forums. There are four main elements to this in the Community Platform:
