@@ -119,6 +119,34 @@ to address, apply your changes in a separate commit and push that to your
 feature branch.  Post a comment in the pull request afterwards; GitHub does
 not send out notifications when you add commits.
 
+## Translations
+
+Any displayed strings added in your commits should be ready to be translated. There's a few things you'll need to know about.
+
+### cp-translations
+
+Some of our translations are used in multiple microservices. As a result, we have taken steps to centralise our strings into cp-translations.
+In this repo, you'll find two sets of files, PO (Gettext) files, and email templates (EJS). If you introduce new strings, you should update the PO file, if it's a new email template, add it to the email-templates folder.
+
+In order to test with cp-translations, it's easiest to use `npm link`. Simply `cd` into `cp-translations` and run `npm link`. Then, `cd` into each relevant micro-service, and run `npm link cp-translations`. This will symlink the repos so you can use your local copy of cp-translations with your code.
+
+### Translating in the code
+
+#### Dust.js
+
+If you're just using some text directly in a dust template, simply wrap your string with `{@i18n key="My string"/}`. So for example, if you have `<h1>My Dojos</h1>`, you should update the template to read `<h1>{@i18n key="My Dojos"/}</h1>`.
+
+#### Angular.js
+
+Sometimes we need some data about what we're showing before we can translate. In this scenario, we use [angular-translate](https://github.com/angular-translate/angular-translate). You will already have access to the new strings added in messages.po, so you can simply follow the [API documentation](https://angular-translate.github.io/docs/#/api) available.
+
+#### Email templates
+
+Emails are sent using [seneca-mail](https://github.com/rjrodger/seneca-mail). You should be able to follow the documentation provided.
+
+### Help
+
+As always, we're here to help. If you're unsure about anything, ping us on [Gitter](https://gitter.im/CoderDojo/community-platform) and we'll guide in the right direction
 
 ## Developer's Certificate of Origin 1.0
 
